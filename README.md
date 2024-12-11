@@ -90,6 +90,16 @@ sudo docker run -v $(pwd):/build/ -it mu:v1
 
 ## Target list
 
+### Snapdragon 845/850 (*SDM845*)
+
+#### nubia Devices
+
+| Device                               | Target name            | DSDT Support    | Contributors                                       |
+|--------------------------------------|------------------------|-----------------|----------------------------------------------------|
+| nubia Z18                            | nubia-NX606J           | ✅              |                                                    |
+| nubia X                              | nubia-NX606J           | ✅              |                                                    |
+
+
 ### Snapdragon 855/855+/860 (*SM8150*)
 
 #### Qualcomm Technologies, Inc. Devices

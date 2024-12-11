@@ -1,0 +1,47 @@
+使用本软件，请您详细阅读以下信息并同意条款：
+1. 本软件完全免费并开放源代码，开源项目地址: https://github.com/woa-msmnile
+2. 本软件源代码遵循BSD 2-Clause开源许可证开源，部分代码遵循GPLv2许可证开源
+3. 使用本软件的源代码及其二进制编译文件，你必须遵循BSD 2-Clause：
+
+* Copyright (c) Andrei Warkentin 
+  著作权由Andrei Warkentin所有，著作权人保留一切权利。
+* Copyright (c) Apple Inc. 
+  著作权由Apple Inc所有，著作权人保留一切权利。
+* Copyright (c) ARM Limited.
+  著作权由ARM Limited所有，著作权人保留一切权利。
+* Copyright (c) Bingxing Wang.
+  著作权由Bingxing Wang所有，著作权人保留一切权利。
+* Copyright (c) DuoWoA authors.
+  著作权由Bingxing Wang所有，著作权人保留一切权利。
+* Copyright (c) Intel Corporation.
+  著作权由Intel Corporation所有，著作权人保留一切权利。
+* Copyright (c) Linaro Limited.
+  著作权由Linaro Limited所有，著作权人保留一切权利。
+* Copyright (c) Microsoft Corporation.
+  著作权由Microsoft Corporation所有，著作权人保留一切权利。
+* Copyright (c) Samuel Tulach.
+  著作权由Samuel Tulach所有，著作权人保留一切权利。
+* Copyright (c) The Android Open Source Project.
+  著作权由The Android Open Source Project所有，著作权人保留一切权利。
+* Copyright (c) The Linux Foundation.
+  著作权由The Linux Foundation所有，著作权人保留一切权利。
+* Copyright (c) Travis Geiselbrecht.
+  著作权由Travis Geiselbrecht所有，著作权人保留一切权利。
+
+源代码形式或二进制形式的再分发和使用，无论是否修改，均需要满足以下条件：
+
+* 二进制形式的再分发必须在文档和/或其他提供的材料中复制上述版权声明、条件列表和以下免责声明。
+* 源代码的再发布必须保留上述版权声明、此条件列表和以下免责声明。
+
+本软件由著作权人和贡献者提供，“原样”提供，不担保任何明示或暗示的担保，包括但不限于
+商品性和适用于特定用途的担保。在任何情况下，著作权人或贡献者均不对任何直接，间接，
+偶然，特殊，惩罚性或后果性损害（包括但不限于采购替代商品或服务；使用，数据或利润
+的损失；或业务中断）负责，即使已被告知此类损害的可能性也是如此。使用本软件造成的
+任何损害，无论是在合同，严格责任或侵权（包括疏忽或其他）的基础上，均应由用户自行承担。
+
+4. 如果您使用的是刷机工具，并且其未遵循协议要求在软件或其文档中附加本许可证和著作权人，我们有权对其警告并提起法律诉讼。
+
+- - - - - - - - - - - - - - - - - - - - 
+>> 如果您不同意，请按音量下
+>> 如果您同意，请同时按下音量上和电源键
+- - - - - - - - - - - - - - - - - - - -
