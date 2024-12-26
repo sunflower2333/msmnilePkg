@@ -1,0 +1,14 @@
+[PcdsFixedAtBuild.common]
+gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferWidth|1080
+gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferHeight|2280
+#gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferPixelBpp|32
+
+# Smbios Info
+gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdSmbiosSystemBrand|"OnePlus"
+gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdSmbiosSystemModel|"6"
+gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdSmbiosBoardModel|"17819"
+gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdSmbiosSystemRetailModel|"enchilada"
+gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdSmbiosSystemRetailSku|"A6003"
+
+gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdABLProduct|"OnePlus 6"
+

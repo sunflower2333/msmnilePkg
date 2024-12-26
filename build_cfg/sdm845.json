@@ -1,0 +1,8 @@
+{
+    "platform": "Sdm845",
+    "package" : "NapaliPkg",
+    "bootshim": {
+        "UEFI_BASE": "0xCE000000",
+        "UEFI_SIZE": "0x02000000"
+    }
+}
