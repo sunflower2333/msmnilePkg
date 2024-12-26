@@ -90,6 +90,15 @@ sudo docker run -v $(pwd):/build/ -it mu:v1
 
 ## Target list
 
+### Snapdragon 845/850 (*SDM845*)
+
+#### OnePlus Devices
+
+| Device                               | Target name            | DSDT Support    | Maintainers                                        |
+|--------------------------------------|------------------------|-----------------|----------------------------------------------------|
+| OnePlus 6                            | oneplus-enchilada      | ✅              | [Daniel224455](https://github.com/Daniel224455)    |
+
+
 ### Snapdragon 855/855+/860 (*SM8150*)
 
 #### Qualcomm Technologies, Inc. Devices

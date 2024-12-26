@@ -70,6 +70,7 @@ jobs:
       matrix:
         target:
           [
+            { platform: "NapaliPkg", codename: "napali", chipname: "sdm845" },
             { platform: "RennellPkg", codename: "rennell", chipname: "sm7125" },
             { platform: "KailuaPkg", codename: "kailua", chipname: "sm8550" },
             { platform: "KodiakPkg", codename: "kodiak", chipname: "sm7325" },
