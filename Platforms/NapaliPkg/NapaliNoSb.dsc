@@ -30,7 +30,7 @@
   FLASH_DEFINITION               = NapaliPkg/Napali.fdf
   SECURE_BOOT                    = 0
   USE_PHYSICAL_TIMER             = 1
-  USE_SCREEN_FOR_SERIAL_OUTPUT   = 1
+  USE_SCREEN_FOR_SERIAL_OUTPUT   = 0
   USE_UART_FOR_SERIAL_OUTPUT     = 0
   USE_MEMORY_FOR_SERIAL_OUTPUT   = 0
   USE_SIMPLEFBDXE                = 1
@@ -68,12 +68,6 @@
 [BuildOptions.common]
 
 GCC:*_*_AARCH64_CC_FLAGS = -DSILICON_PLATFORM=845
-
-!if $(HAS_MLVM) == TRUE
-  GCC:*_*_AARCH64_CC_FLAGS = -DHAS_MLVM=1
-!else
-  GCC:*_*_AARCH64_CC_FLAGS = -DHAS_MLVM=0
-!endif
 
 [PcdsFixedAtBuild.common]
   # Platform-specific

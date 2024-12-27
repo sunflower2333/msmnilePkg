@@ -69,12 +69,6 @@
 
 GCC:*_*_AARCH64_CC_FLAGS = -DSILICON_PLATFORM=845
 
-!if $(HAS_MLVM) == TRUE
-  GCC:*_*_AARCH64_CC_FLAGS = -DHAS_MLVM=1
-!else
-  GCC:*_*_AARCH64_CC_FLAGS = -DHAS_MLVM=0
-!endif
-
 [PcdsFixedAtBuild.common]
   # Platform-specific
   gArmTokenSpaceGuid.PcdSystemMemorySize|0x100000000            # 4GB
