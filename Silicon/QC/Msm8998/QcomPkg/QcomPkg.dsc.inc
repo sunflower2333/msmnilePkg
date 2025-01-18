@@ -9,6 +9,9 @@
 #
 ##
 
+[BuildOptions.common]
+  *_*_*_CC_FLAGS = -march=armv8-a+crypto+rcpc 
+
 [PcdsFixedAtBuild.common]
   gArmTokenSpaceGuid.PcdSystemMemoryBase|0x80000000         # Starting address
   gArmTokenSpaceGuid.PcdCpuVectorBaseAddress|0x9ff8c000
