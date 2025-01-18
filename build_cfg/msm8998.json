@@ -1,5 +1,5 @@
 {
-    "platform": "MSM8998",
+    "platform": "Msm8998",
     "package" : "NazgulPkg",
     "bootshim": {
         "UEFI_BASE": "0x9FC00000",
