@@ -30,7 +30,7 @@
   FLASH_DEFINITION               = NazgulPkg/Nazgul.fdf
   SECURE_BOOT                    = 0
   USE_PHYSICAL_TIMER             = 1
-  USE_SCREEN_FOR_SERIAL_OUTPUT   = 1
+  USE_SCREEN_FOR_SERIAL_OUTPUT   = 0
   USE_UART_FOR_SERIAL_OUTPUT     = 0
   USE_MEMORY_FOR_SERIAL_OUTPUT   = 0
   USE_SIMPLEFBDXE                = 1
