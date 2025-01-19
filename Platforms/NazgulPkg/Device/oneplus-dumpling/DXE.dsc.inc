@@ -5,7 +5,6 @@ Nazgul/BOOT.XF.1.2.2-00131-M8998WZB-1/QcomPkg/Drivers/UsbInitDxe/UsbInitDxe.inf
 Nazgul/BOOT.XF.1.2.2-00131-M8998WZB-1/QcomPkg/Drivers/UsbMsdDxe/UsbMsdDxe.inf
 Nazgul/BOOT.XF.1.2.2-00131-M8998WZB-1/QcomPkg/Drivers/XhciPciEmulationDxe/XhciPciEmulationDxe.inf
 Nazgul/BOOT.XF.1.2.2-00131-M8998WZB-1/QcomPkg/Drivers/I2CDxe/I2CDxe.inf
-Nazgul/BOOT.XF.1.2.2-00131-M8998WZB-1/QcomPkg/Drivers/UsbConfigDxe/UsbConfigDxe.inf
 SurfaceDuoFamilyPkg/Driver/SimpleFbDxe/SimpleFbDxe.inf
 
 #MdeModulePkg/Core/Dxe/DxeMain.inf
@@ -56,7 +55,7 @@ NazgulPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/HWIODxe/HWIODxe.inf
 NazgulPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/SPIDxe/SPIDxe.inf
 NazgulPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/SPMIDxe/SPMIDxe.inf
 NazgulPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/SdccDxe/SdccDxe.inf
-NazgulPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/UFSDxe/UFSDxe.inf
+#NazgulPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/UFSDxe/UFSDxe.inf
 NazgulPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/TLMMDxe/TLMMDxe.inf
 #NazgulPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/DisplayDxe/DisplayDxe.inf
 NazgulPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/PlatformInfoDxe/PlatformInfoDxe.inf
@@ -80,3 +79,5 @@ NazgulPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/QdssDxe/QdssDxe.inf
 NazgulPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Application/QcomChargerApp/QcomChargerApp.inf
 
 QcomPkg/PatchedBinaries/ClockDxe.inf
+NazgulPkg/Device/$(TARGET_DEVICE)/PatchedBinaries/UsbConfigDxe.inf
+Nazgul/BOOT.XF.1.2.2-00131-M8998WZB-1/QcomPkg/Drivers/UFSDxe/UFSDxe.inf
