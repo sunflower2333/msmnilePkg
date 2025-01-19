@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PanelName>NT36672C</PanelName>
+<PanelDescription>NT36672C Tianma FHD Video Mode Panel (1080x2400 24bpp)</PanelDescription>
+<Group id="Active Timing">
+ <HorizontalActive>1080</HorizontalActive>
+ <HorizontalFrontPorch>73</HorizontalFrontPorch>
+ <HorizontalBackPorch>40</HorizontalBackPorch>
+ <HorizontalSyncPulse>12</HorizontalSyncPulse>
+ <HorizontalSyncSkew>0</HorizontalSyncSkew>
+ <HorizontalLeftBorder>0</HorizontalLeftBorder>
+ <HorizontalRightBorder>0</HorizontalRightBorder>
+ <VerticalActive>2400</VerticalActive>
+ <VerticalFrontPorch>2496</VerticalFrontPorch>
+ <VerticalBackPorch>30</VerticalBackPorch>
+ <VerticalSyncPulse>2</VerticalSyncPulse>
+ <VerticalSyncSkew>0</VerticalSyncSkew>
+ <VerticalTopBorder>0</VerticalTopBorder>
+ <VerticalBottomBorder>0</VerticalBottomBorder>
+</Group>
+<Group id="Display Interface">
+ <InterfaceType>8</InterfaceType>
+ <InterfaceColorFormat>3</InterfaceColorFormat>
+</Group>
+<Group id="DSI Interface">
+ <DSIChannelId>1</DSIChannelId>
+ <DSIVirtualId>0</DSIVirtualId>
+ <DSIColorFormat>36</DSIColorFormat>
+ <DSITrafficMode>2</DSITrafficMode>
+ <DSIDSCEnable>True</DSIDSCEnable>
+ <DSIDSCMajor>1</DSIDSCMajor>
+ <DSIDSCMinor>1</DSIDSCMinor>
+ <DSIDSCScr>0</DSIDSCScr>
+ <DSIDSCProfileID>4</DSIDSCProfileID>
+ <DSIDSCSliceWidth>540</DSIDSCSliceWidth>
+ <DSIDSCSliceHeight>20</DSIDSCSliceHeight>
+ <DSILanes>4</DSILanes>
+ <DSILP11AtInit>True</DSILP11AtInit>
+<DSIClockHSForceRequest>1</DSIClockHSForceRequest>
+ <DSILowPowerModeInBLLPEOF>True</DSILowPowerModeInBLLPEOF>
+ <DSILowPowerModeInBLLP>True</DSILowPowerModeInBLLP>
+ <DSIRefreshRate>0x3C0000</DSIRefreshRate>
+ <DSICmdSwapInterface>False</DSICmdSwapInterface>
+ <DSICmdUsingTrigger>False</DSICmdUsingTrigger>
+ <DSIControllerMapping>
+  00
+ </DSIControllerMapping>
+</Group>
+<DSIInitSequence>
+ 15 FF 10
+ 15 FB 01
+ 29 C2 1B A0
+
+ 15 FF 20
+ 15 FB 01
+ 15 06 64
+ 15 69 D0
+ 15 F2 65
+ 15 F3 54
+ 15 F4 65
+ 15 F5 54
+ 15 F6 65
+ 15 F7 54
+ 15 F8 65
+ 15 F9 54
+
+ 15 FF 24
+ 15 FB 01
+ 15 02 2F
+ 15 03 2D
+ 15 04 2E
+ 15 05 2C
+ 15 06 8B
+ 15 07 8C
+ 15 1A 2F
+ 15 1B 2D
+ 15 1C 2E
+ 15 1D 2C
+ 15 1E 8B
+ 15 1F 8C
+ 15 33 03
+ 15 34 01
+ 15 4D 05
+ 15 4E 33
+ 15 4F 33
+ 15 53 33
+ 15 79 03
+ 15 7A 03
+ 15 7B 8D
+ 15 7D 05
+ 15 80 05
+ 15 81 05
+ 15 A0 0D
+ 15 A2 0D
+ 15 A3 03
+ 15 A4 06
+ 15 A5 06
+ 15 E9 02
+
+ 15 FF 25
+ 15 FB 01
+ 15 21 00
+ 15 66 40
+ 15 67 29
+ 15 79 7A
+ 15 DA 00
+ 15 E0 00
+ 15 F0 00
+ 15 F1 44
+
+ 15 FF 26
+ 15 FB 01
+ 15 01 EA
+ 15 04 EA
+ 15 05 08
+ 15 06 0F
+ 15 08 0F
+ 15 81 0D
+ 15 83 03
+ 15 88 03
+
+ 15 FF 27
+ 15 FB 01
+ 15 6E 23
+ 15 6F 01
+ 15 73 21
+ 15 74 03
+ 15 7E 63
+ 15 83 63
+ 15 88 03
+ 15 89 01
+
+ 15 FF 2A
+ 15 FB 01
+ 15 00 91
+ 15 03 20
+ 15 07 56
+ 15 0A 70
+ 15 0C 09
+ 15 0D 40
+ 15 0E 02
+ 15 0F 00
+ 15 11 F0
+ 15 15 0E
+ 15 16 A8
+ 15 19 0E
+ 15 1A 7C
+ 15 1E 38
+ 15 1F 38
+ 15 20 38
+ 15 27 80
+ 15 28 B2
+ 15 29 1D
+ 15 2A 01
+ 15 2B 00
+ 15 2D 04
+ 15 2F 06
+ 15 30 1E
+ 15 31 42
+ 15 33 B0
+ 15 34 B4
+ 15 35 34
+ 15 36 C4
+ 15 37 AF
+ 15 38 38
+ 15 39 C0
+ 15 3A 1E
+
+ 15 FF 2B
+ 15 FB 01
+ 15 B7 06
+ 15 B8 13
+ 15 C0 03
+
+ 15 FF F0
+ 15 FB 01
+ 15 1C 01
+ 15 33 01
+ 15 5A 00
+ 15 9C 00
+
+ 15 FF C0
+ 15 FB 01
+ 15 9C 11
+ 15 9D 11
+
+ 15 FF E0
+ 15 FB 01
+ 15 35 82
+
+ 15 FF 10
+ 15 FB 01
+ 15 51 C1
+ 15 53 2C
+ 15 55 00
+
+ 15 FF 23
+ 15 FB 01
+ 15 10 82
+ 15 11 01
+ 15 12 95
+ 15 15 68
+ 15 16 0B
+
+ 15 30 FF
+ 15 31 FD
+ 15 32 FB
+ 15 33 FA
+ 15 34 F9
+ 15 35 F7
+ 15 36 F5
+ 15 37 F4
+ 15 38 F1
+ 15 39 EF
+ 15 3A ED
+ 15 3B EB
+ 15 3D EA
+ 15 3F E8
+ 15 40 E6
+ 15 41 E5
+
+ 15 45 FF
+ 15 46 F3
+ 15 47 E8
+ 15 48 DD
+ 15 49 D3
+ 15 4A C9
+ 15 4B BE
+ 15 4C B3
+ 15 4D A9
+ 15 4E 9F
+ 15 4F 95
+ 15 50 8B
+ 15 51 81
+ 15 52 77
+ 15 53 6D
+ 15 54 65
+
+ 15 58 FF
+ 15 59 F8
+ 15 5A F3
+ 15 5B EE
+ 15 5C E9
+ 15 5D E4
+ 15 5E DF
+ 15 5F DA
+ 15 60 D4
+ 15 61 CF
+ 15 62 CA
+ 15 63 C5
+ 15 64 C0
+ 15 65 BB
+ 15 66 B6
+ 15 67 B1
+ 15 A0 11
+
+ 15 FF 27
+ 15 FB 01
+ 15 40 25
+
+ 15 FF 10
+ 15 FB 01
+ 05 11 00
+ FF 46
+ 05 29 00
+ FF 28
+
+ 15 FF 27
+ 15 FB 01
+ 15 3F 01
+ 15 43 08
+
+ 15 FF 10
+ 15 FB 01
+</DSIInitSequence>
+<DSITermSequence>
+ 15 FF 10
+ 15 FB 01
+ 05 28
+ FF 10
+ 05 10
+ FF 3C
+</DSITermSequence>
+<Group id='Backlight Configuration'>
+ <BacklightType>1</BacklightType>
+ <BacklightPmicControlType>2</BacklightPmicControlType>
+ <DisplayResetInfo>0 5000 1000 10000 0</DisplayResetInfo>
+</Group>
