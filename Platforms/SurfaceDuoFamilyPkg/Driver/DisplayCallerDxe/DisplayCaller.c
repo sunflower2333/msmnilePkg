@@ -139,7 +139,7 @@ DisplayCallerDxeInitialize(
     if (Status != EFI_SUCCESS){
         DEBUG((EFI_D_ERROR, "[DisplayCaller]: Failed to Enable Display!\n"));
         /* Exit */
-        goto exit;
+//        goto exit;
     }
 
     // Hook Exit boot service if device needs disable display after booting.

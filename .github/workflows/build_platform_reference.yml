@@ -30,7 +30,11 @@ jobs:
 
       - id: matrix
         run: |
-          echo "value=[$(find ./Platforms/${{ inputs.platform }} -maxdepth 2 -wholename "*/Device/qcom-*"  -printf "\"%f\", ")]" >> $GITHUB_OUTPUT
+          build_target=$(find ./Platforms/${{ inputs.platform }} -maxdepth 2 -wholename "*/Device/qcom-*"  -printf "\"%f\", ")
+          if [ -z "$build_target" ]; then
+            build_target=$(find ./Platforms/${{ inputs.platform }} -maxdepth 2 -wholename "*/Device/*"  -printf "\"%f\", \n" | head -n 1)
+          fi
+          echo "value=[$build_target]" >> $GITHUB_OUTPUT
 
   build:
     strategy:

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PanelName>NT36672C</PanelName>
+<PanelDescription>NT36672C Huaxing FHD Video Mode Panel (1080x2400 24bpp)</PanelDescription>
+<Group id="Active Timing">
+ <HorizontalActive>1080</HorizontalActive>
+ <HorizontalFrontPorch>73</HorizontalFrontPorch>
+ <HorizontalBackPorch>40</HorizontalBackPorch>
+ <HorizontalSyncPulse>12</HorizontalSyncPulse>
+ <HorizontalSyncSkew>0</HorizontalSyncSkew>
+ <HorizontalLeftBorder>0</HorizontalLeftBorder>
+ <HorizontalRightBorder>0</HorizontalRightBorder>
+ <VerticalActive>2400</VerticalActive>
+ <VerticalFrontPorch>2496</VerticalFrontPorch>
+ <VerticalBackPorch>30</VerticalBackPorch>
+ <VerticalSyncPulse>2</VerticalSyncPulse>
+ <VerticalSyncSkew>0</VerticalSyncSkew>
+ <VerticalTopBorder>0</VerticalTopBorder>
+ <VerticalBottomBorder>0</VerticalBottomBorder>
+</Group>
+<Group id="Display Interface">
+ <InterfaceType>8</InterfaceType>
+ <InterfaceColorFormat>3</InterfaceColorFormat>
+</Group>
+<Group id="DSI Interface">
+ <DSIChannelId>1</DSIChannelId>
+ <DSIVirtualId>0</DSIVirtualId>
+ <DSIColorFormat>36</DSIColorFormat>
+ <DSITrafficMode>2</DSITrafficMode>
+ <DSIDSCEnable>True</DSIDSCEnable>
+ <DSIDSCMajor>1</DSIDSCMajor>
+ <DSIDSCMinor>1</DSIDSCMinor>
+ <DSIDSCScr>0</DSIDSCScr>
+ <DSIDSCProfileID>4</DSIDSCProfileID>
+ <DSIDSCSliceWidth>540</DSIDSCSliceWidth>
+ <DSIDSCSliceHeight>20</DSIDSCSliceHeight>
+ <DSILanes>4</DSILanes>
+ <DSILP11AtInit>True</DSILP11AtInit>
+<DSIClockHSForceRequest>1</DSIClockHSForceRequest>
+ <DSILowPowerModeInBLLPEOF>True</DSILowPowerModeInBLLPEOF>
+ <DSILowPowerModeInBLLP>True</DSILowPowerModeInBLLP>
+ <DSIRefreshRate>0x3C0000</DSIRefreshRate>
+ <DSICmdSwapInterface>False</DSICmdSwapInterface>
+ <DSICmdUsingTrigger>False</DSICmdUsingTrigger>
+ <DSIControllerMapping>
+  00
+ </DSIControllerMapping>
+</Group>
+<DSIInitSequence>
+ 15 FF 10
+ 15 FB 01
+ 15 B0 00
+
+ 15 FF E0
+ 15 FB 01
+ 15 35 82
+
+ 15 FF F0
+ 15 FB 01
+ 15 5A 00
+ 15 9C 00
+ 15 BE 08
+
+ 15 FF C0
+ 15 FB 01
+ 15 9C 11
+ 15 9D 11
+
+ 15 FF 10
+ 15 FB 01
+ 15 51 C1
+ 15 53 2C
+ 15 55 00
+
+ 15 FF 23
+ 15 FB 01
+ 15 10 82
+ 15 11 01
+ 15 12 95
+ 15 15 68
+ 15 16 0B
+
+ 15 30 FF
+ 15 31 FD
+ 15 32 FB
+ 15 33 FA
+ 15 34 F9
+ 15 35 F7
+ 15 36 F5
+ 15 37 F4
+ 15 38 F1
+ 15 39 EF
+ 15 3A ED
+ 15 3B EB
+ 15 3D EA
+ 15 3F E8
+ 15 40 E6
+ 15 41 E5
+
+ 15 45 FF
+ 15 46 F3
+ 15 47 E8
+ 15 48 DD
+ 15 49 D3
+ 15 4A C9
+ 15 4B BE
+ 15 4C B3
+ 15 4D A9
+ 15 4E 9F
+ 15 4F 95
+ 15 50 8B
+ 15 51 81
+ 15 52 77
+ 15 53 6D
+ 15 54 65
+
+ 15 58 FF
+ 15 59 F8
+ 15 5A F3
+ 15 5B EE
+ 15 5C E9
+ 15 5D E4
+ 15 5E DF
+ 15 5F DA
+ 15 60 D4
+ 15 61 CF
+ 15 62 CA
+ 15 63 C5
+ 15 64 C0
+ 15 65 BB
+ 15 66 B6
+ 15 67 B1
+ 15 A0 11
+
+ 15 FF 27
+ 15 FB 01
+ 15 40 25
+
+ 15 FF 10
+ 15 FB 01
+ 05 11 00
+ FF 46
+ 05 29 00
+ FF 28
+
+ 15 FF 27
+ 15 FB 01
+ 15 3F 01
+ 15 43 08
+
+ 15 FF 10
+</DSIInitSequence>
+<DSITermSequence>
+ 15 FF 10
+ 15 FB 01
+ 05 28
+ FF 10
+ 05 10
+ FF 3C
+</DSITermSequence>
+<Group id='Backlight Configuration'>
+ <BacklightType>1</BacklightType>
+ <BacklightPmicControlType>2</BacklightPmicControlType>
+ <DisplayResetInfo>0 5000 1000 10000 0</DisplayResetInfo>
+</Group>

@@ -254,6 +254,16 @@ RamPartitionDxeInitialize(
           }
 #endif
 
+        // Perhaps some platforms allocated an area for RAM before 0x80000000.
+        // Here we only consider the size of the area as 0x40000000.
+        // Memory range: 0x40000000-0x80000000
+          if(RamPartitionEntries[i].Base == 0x40000000){
+              MemoryDescriptorEx[Index].Address       = 0x40000000;
+              MemoryDescriptorEx[Index].Length        = 0x40000000;
+              Index++;
+              continue;
+          }
+
         // Update RAM Partitions.
         // You should have mapped 4GB RAM in PEI stage.
         // End Address of 4GB: 0x180000000
