@@ -253,11 +253,14 @@ RamPartitionDxeInitialize(
               continue;
           }
 #endif
+
         // Perhaps some platforms allocated an area for RAM before 0x80000000.
         // Here we only consider the size of the area as 0x40000000.
-          if((RamPartitionEntries[0].Base < GENERIC_RAM_BASE) && ((GENERIC_RAM_BASE - RamPartitionEntries[0].Base) == 0x40000000)){
-              MemoryDescriptorEx[0].Address       = 0x40000000;
-              MemoryDescriptorEx[0].Length        = 0x40000000;
+        // Memory range: 0x40000000-0x80000000
+          if(RamPartitionEntries[i].Base == 0x40000000){
+              MemoryDescriptorEx[Index].Address       = 0x40000000;
+              MemoryDescriptorEx[Index].Length        = 0x40000000;
+              Index++;
               continue;
           }
 
