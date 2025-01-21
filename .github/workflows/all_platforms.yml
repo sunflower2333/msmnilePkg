@@ -96,6 +96,11 @@ jobs:
               chipname: "sdm845"
             },
             {
+              platform: "NazgulPkg",
+              codename: "nazgul",
+              chipname: "msm8998"
+            },
+            {
               platform: "RennellPkg",
               codename: "rennell",
               chipname: "sm7125"

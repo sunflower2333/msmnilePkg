@@ -75,6 +75,7 @@ jobs:
             { platform: "KonaPkg",    codename: "kona",    chipname: "sm8250" },
             { platform: "MooreaPkg",  codename: "moorea",  chipname: "sm7150" },
             { platform: "NapaliPkg",  codename: "napali",  chipname: "sdm845" },
+            { platform: "NazgulPkg",  codename: "nazgul",  chipname: "msm8998"},
             { platform: "PalimaPkg",  codename: "palima",  chipname: "sm8475" },
             { platform: "RennellPkg", codename: "rennell", chipname: "sm7125" },
             {
