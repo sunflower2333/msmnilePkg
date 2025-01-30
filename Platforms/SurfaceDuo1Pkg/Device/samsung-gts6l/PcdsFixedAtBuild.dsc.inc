@@ -19,3 +19,4 @@ gEfiMdeModulePkgTokenSpaceGuid.PcdSetupConOutColumn|269
 gEfiMdeModulePkgTokenSpaceGuid.PcdSetupConOutRow|80    
 gEfiMdeModulePkgTokenSpaceGuid.PcdConOutColumn|269     
 gEfiMdeModulePkgTokenSpaceGuid.PcdConOutRow|80         
+

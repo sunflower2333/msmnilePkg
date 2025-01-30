@@ -10,3 +10,6 @@ gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdSmbiosSystemRetailModel|"mh2lm"
 gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdSmbiosSystemRetailSku|"MP"
 
 gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdABLProduct|"LGE G8x"
+
+# Storage
+gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdStorageHasUFS3|0

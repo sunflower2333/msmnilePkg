@@ -10,3 +10,6 @@ gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdSmbiosSystemRetailModel|"m971q"
 gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdSmbiosSystemRetailSku|"MP"
 
 gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdABLProduct|"Meizu 16s"
+
+# Storage
+gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdStorageHasUFS3|0

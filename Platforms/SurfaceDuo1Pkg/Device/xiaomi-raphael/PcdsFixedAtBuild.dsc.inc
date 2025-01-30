@@ -10,3 +10,6 @@ gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdSmbiosSystemRetailModel|"raphael"
 gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdSmbiosSystemRetailSku|"MP"
 
 gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdABLProduct|"Xiaomi K20 Pro"
+
+# Storage
+gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdStorageHasUFS3|0

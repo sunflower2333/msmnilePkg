@@ -15,3 +15,6 @@ gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdSmbiosSystemRetailModel|"Cepheus"
 gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdSmbiosSystemRetailSku|"MP"
 
 gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdABLProduct|"Xiaomi 9"
+
+# Storage
+gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdStorageHasUFS3|0

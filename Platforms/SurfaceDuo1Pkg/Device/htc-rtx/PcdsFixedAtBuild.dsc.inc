@@ -10,3 +10,6 @@ gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdSmbiosSystemRetailModel|"rtx"
 gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdSmbiosSystemRetailSku|"MP"
 
 gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdABLProduct|"HTC Hub 5G"
+
+# Storage
+gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdStorageHasUFS3|0

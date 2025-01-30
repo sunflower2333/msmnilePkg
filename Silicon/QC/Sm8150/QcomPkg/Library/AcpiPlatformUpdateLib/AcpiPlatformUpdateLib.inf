@@ -42,3 +42,4 @@
 
 [FixedPcd]
   gArmPlatformTokenSpaceGuid.PcdClusterCount
+  gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdStorageHasUFS3

@@ -10,3 +10,6 @@ gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdSmbiosSystemRetailModel|"mh2lm5g"
 gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdSmbiosSystemRetailSku|"LM-V510"
 
 gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdABLProduct|"LGE V50S ThinQ"
+
+# Storage
+gSurfaceDuoFamilyPkgTokenSpaceGuid.PcdStorageHasUFS3|0
