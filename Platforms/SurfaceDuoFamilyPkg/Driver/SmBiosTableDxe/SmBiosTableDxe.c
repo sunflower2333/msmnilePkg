@@ -77,6 +77,9 @@ CONST CHAR8 *PlatformTypeStrings[EFI_PLATFORMINFO_NUM_TYPES] = {
     "RCM",     "DMA",        "STP",    "SBC",         "ADP",    "CHI", "SDP",
     "RRP",     "CLS",        "TTP",    "HDK",         "IOT",    "ATP", "IDP"};
 
+#define UNKNOWN_STRING_NAME "Not Specified"
+#define HAND_HELD_GAMING_PLATFORM_NAME "HHG"
+
 /***********************************************************************
         SMBIOS data definition  TYPE0  BIOS Information
 ************************************************************************/
@@ -182,8 +185,8 @@ SMBIOS_TABLE_TYPE1 mSysInfoType1 = {
     5, // SKUNumber String
     6, // Family String
 };
-CHAR8 *mSysInfoType1Strings[] = {"Qualcomm", "MTP",    "2.2", "Not Specified",
-                                 "6",        "SDM855", NULL};
+CHAR8 *mSysInfoType1Strings[] = {
+    "Qualcomm", "MTP", "2.2", UNKNOWN_STRING_NAME, "6", "SDM855", NULL};
 
 /***********************************************************************
         SMBIOS data definition  TYPE2  Board Information
@@ -211,8 +214,13 @@ SMBIOS_TABLE_TYPE2 mBoardInfoType2 = {
     {0}                       // ContainedObjectHandles[1];
 };
 CHAR8 *mBoardInfoType2Strings[] = {
-    "Qualcomm",      "MTP", "Not Specified", "Not Specified", "Not Specified",
-    "Not Specified", NULL};
+    "Qualcomm",
+    "MTP",
+    UNKNOWN_STRING_NAME,
+    UNKNOWN_STRING_NAME,
+    UNKNOWN_STRING_NAME,
+    UNKNOWN_STRING_NAME,
+    NULL};
 
 /***********************************************************************
         SMBIOS data definition  TYPE3  Enclosure Information
@@ -236,7 +244,8 @@ SMBIOS_TABLE_TYPE3 mEnclosureInfoType3 = {
     {{0}},                  // ContainedElements[1];
 };
 CHAR8 *mEnclosureInfoType3Strings[] = {
-    "Qualcomm", "Not Specified", "Not Specified", "Not Specified", NULL};
+    "Qualcomm", UNKNOWN_STRING_NAME, UNKNOWN_STRING_NAME, UNKNOWN_STRING_NAME,
+    NULL};
 
 /***********************************************************************
         SMBIOS data definition  TYPE4  Processor Information
@@ -328,8 +337,8 @@ SMBIOS_TABLE_TYPE4 mProcessorInfoType4 = {
 };
 
 CHAR8 *mProcessorInfoType4Strings[] = {
-    "Qualcomm", "Qualcomm Technologies Inc", "Not Specified", "Not Specified",
-    NULL};
+    "Qualcomm", "Qualcomm Technologies Inc", UNKNOWN_STRING_NAME,
+    UNKNOWN_STRING_NAME, NULL};
 
 /***********************************************************************
         SMBIOS data definition  TYPE7  Cache Information
@@ -552,8 +561,13 @@ SMBIOS_TABLE_TYPE17 mMemDevInfoType17 = {
 };
 
 CHAR8 *mMemDevInfoType17Strings[] = {
-    "Top - on board",     "Bank 0", "Hynix", "Not Specified", "Not Specified",
-    "H9HKNNNEBMAVAR-NEH", NULL};
+    "Top - on board",
+    "Bank 0",
+    "Hynix",
+    UNKNOWN_STRING_NAME,
+    UNKNOWN_STRING_NAME,
+    "H9HKNNNEBMAVAR-NEH",
+    NULL};
 
 /***********************************************************************
         SMBIOS data definition  TYPE19  Memory Array Mapped Address Information
@@ -778,13 +792,13 @@ VOID SysInfoUpdateSmbiosType1(
 /***********************************************************************
         SMBIOS data update  TYPE2  Board Information
 ************************************************************************/
-VOID BoardInfoUpdateSmbiosType2(CHAR8 *serialNo)
+VOID BoardInfoUpdateSmbiosType2(CHAR8 *serialNo, CHAR8 *BoardNameString)
 {
   // Update string table before proceeds
   mBoardInfoType2Strings[0] = (CHAR8 *)FixedPcdGetPtr(PcdSmbiosSystemBrand);
-  mBoardInfoType2Strings[1] = (CHAR8 *)FixedPcdGetPtr(PcdSmbiosBoardModel);
 
   // Update serial number from Board DXE
+  mBoardInfoType2Strings[1] = BoardNameString;
   mBoardInfoType2Strings[3] = serialNo;
 
   LogSmbiosData(
@@ -955,6 +969,121 @@ GetSystemMemorySize(UINT64 *SystemMemorySize)
   return Status;
 }
 
+EFI_STATUS
+EFIAPI
+RetrievePlatformName(CHAR8 *PlatformName)
+{
+  EFI_PLATFORMINFO_PROTOCOL          *pEfiPlatformInfoProtocol = NULL;
+  EFI_CHIPINFO_PROTOCOL              *mBoardProtocol           = NULL;
+  EFI_PLATFORMINFO_PLATFORM_INFO_TYPE PlatformInfo;
+
+  if (PlatformName == NULL) {
+    return EFI_INVALID_PARAMETER;
+  }
+
+  // Locate Qualcomm Board Protocol
+  EFI_STATUS Status = gBS->LocateProtocol(
+      &gEfiPlatformInfoProtocolGuid, NULL, (VOID *)&pEfiPlatformInfoProtocol);
+
+  if (EFI_ERROR(Status) || pEfiPlatformInfoProtocol == NULL) {
+    return EFI_INVALID_PARAMETER;
+  }
+
+  Status = pEfiPlatformInfoProtocol->GetPlatformInfo(
+      pEfiPlatformInfoProtocol, &PlatformInfo);
+
+  if (!EFI_ERROR(Status)) {
+    EFI_PLATFORMINFO_PLATFORM_TYPE platformInfoType = PlatformInfo.platform;
+
+    if (PlatformInfo.platform >= EFI_PLATFORMINFO_NUM_TYPES) {
+      platformInfoType = EFI_PLATFORMINFO_TYPE_UNKNOWN;
+    }
+
+    // HHG Platform was introduced with Lahaina later in the release cycle
+    // It lacks a proper platform type, and instead makes use of the HDK type
+    // with specific subtype values.
+    // On lahaina, these subtype values are 1 and 2.
+    // On kailua, this subtype value is 1.
+    // It is confirmed on official kailua kernel sources that HHG is a
+    // dedicated platform It also would not make sense to merge it with HDKs
+    // due to numerous differences Detect HHG and override the type
+    // accordingly.
+    UINT16 IsHHGPlatform = 0;
+
+    // Locate Qualcomm Board Protocol
+    if (!EFI_ERROR(gBS->LocateProtocol(
+            &gEfiChipInfoProtocolGuid, NULL, (VOID *)&mBoardProtocol)) &&
+        mBoardProtocol != NULL) {
+      UINT16 SDFE = 0;
+
+      mBoardProtocol->GetChipFamily(
+          mBoardProtocol, (EFIChipInfoFamilyType *)&SDFE);
+
+      // CHIPINFO_FAMILY_LAHAINA = 105
+      if (SDFE == 105) {
+        if (platformInfoType == EFI_PLATFORMINFO_TYPE_HDK &&
+            (PlatformInfo.subtype == 1 || PlatformInfo.subtype == 2)) {
+          // HHG
+          IsHHGPlatform = 1;
+        }
+      }
+      // CHIPINFO_FAMILY_KAILUA = 127
+      else if (SDFE == 127) {
+        if (platformInfoType == EFI_PLATFORMINFO_TYPE_HDK &&
+            PlatformInfo.subtype == 1) {
+          // HHG
+          IsHHGPlatform = 1;
+        }
+      }
+    }
+
+    if (IsHHGPlatform == 1) {
+      AsciiStrnCpyS(
+          PlatformName, PLATFORM_TYPE_STRING_MAX_SIZE,
+          HAND_HELD_GAMING_PLATFORM_NAME,
+          AsciiStrLen(HAND_HELD_GAMING_PLATFORM_NAME));
+    }
+    else {
+      AsciiStrnCpyS(
+          PlatformName, PLATFORM_TYPE_STRING_MAX_SIZE,
+          PlatformTypeStrings[platformInfoType],
+          AsciiStrLen(PlatformTypeStrings[platformInfoType]));
+    }
+  }
+
+  return Status;
+}
+
+EFI_STATUS
+EFIAPI
+RetrieveChipVersion(CHAR8 *VersionString)
+{
+  EFI_CHIPINFO_PROTOCOL *mBoardProtocol = NULL;
+  UINT32                 SIDV           = 0;
+
+  if (VersionString == NULL) {
+    return EFI_INVALID_PARAMETER;
+  }
+
+  // Locate Qualcomm Board Protocol
+  EFI_STATUS Status = gBS->LocateProtocol(
+      &gEfiChipInfoProtocolGuid, NULL, (VOID *)&mBoardProtocol);
+
+  if (EFI_ERROR(Status) || mBoardProtocol == NULL) {
+    return EFI_INVALID_PARAMETER;
+  }
+
+  Status = mBoardProtocol->GetChipVersion(mBoardProtocol, &SIDV);
+  if (!EFI_ERROR(Status)) {
+    UINT16 SVMJ = (UINT16)((SIDV >> 16) & 0xFFFF);
+    UINT16 SVMI = (UINT16)(SIDV & 0xFFFF);
+    AsciiSPrint(
+        VersionString, PLATFORM_TYPE_STRING_MAX_SIZE, "%d.%d", SVMJ, SVMI);
+  }
+
+  return Status;
+}
+
 /***********************************************************************
         Driver Entry
 ************************************************************************/
@@ -968,21 +1097,16 @@ SmBiosTableDxeInitialize(
   CHAR8                    SerialNumberString[EFICHIPINFO_MAX_ID_LENGTH];
   CHAR8                    FamilyString[EFICHIPINFO_MAX_ID_LENGTH] = {0};
   EFIChipInfoSerialNumType serial;
-  EFI_PLATFORMINFO_PLATFORM_INFO_TYPE PlatformInfo;
-  UINT64                              SystemMemorySize   = 0;
+  UINT64                   SystemMemorySize              = 0;
   CHAR8 ProductNameString[PLATFORM_TYPE_STRING_MAX_SIZE] = {0};
+  CHAR8 BoardNameString[PLATFORM_TYPE_STRING_MAX_SIZE]   = {0};
   CHAR8 VersionString[PLATFORM_TYPE_STRING_MAX_SIZE]     = {0};
 
   EFI_CHIPINFO_PROTOCOL     *mBoardProtocol           = NULL;
-  EFI_PLATFORMINFO_PROTOCOL *pEfiPlatformInfoProtocol = NULL;
 
   // Locate Qualcomm Board Protocol
   Status = gBS->LocateProtocol(
       &gEfiChipInfoProtocolGuid, NULL, (VOID *)&mBoardProtocol);
-
-  // Locate Qualcomm Board Protocol
-  Status = gBS->LocateProtocol(
-      &gEfiPlatformInfoProtocolGuid, NULL, (VOID *)&pEfiPlatformInfoProtocol);
 
   // Get Serial Number, Chip Version, Chip Family
   if (mBoardProtocol != NULL) {
@@ -993,6 +1117,7 @@ SmBiosTableDxeInitialize(
         mBoardProtocol, FamilyString, EFICHIPINFO_MAX_ID_LENGTH);
   }
 
+  // Get Chip Version
   CHAR8 *SmbiosSystemRetailModel =
       (CHAR8 *)FixedPcdGetPtr(PcdSmbiosSystemRetailModel);
   if (AsciiStrLen(SmbiosSystemRetailModel) > 0) {
@@ -1000,88 +1125,39 @@ SmBiosTableDxeInitialize(
         VersionString, PLATFORM_TYPE_STRING_MAX_SIZE, SmbiosSystemRetailModel,
         AsciiStrLen(SmbiosSystemRetailModel));
   }
-  // Get Chip Version
   else if (mBoardProtocol != NULL) {
-    UINT32 SIDV = 0;
-    mBoardProtocol->GetChipVersion(mBoardProtocol, &SIDV);
-    UINT16 SVMJ = (UINT16)((SIDV >> 16) & 0xFFFF);
-    UINT16 SVMI = (UINT16)(SIDV & 0xFFFF);
-    AsciiSPrint(
-        VersionString, PLATFORM_TYPE_STRING_MAX_SIZE, "%d.%d", SVMJ, SVMI);
+    RetrieveChipVersion(VersionString);
   }
   else {
     AsciiStrnCpyS(
-        VersionString, PLATFORM_TYPE_STRING_MAX_SIZE, "Not Specified",
-        AsciiStrLen("Not Specified"));
+        VersionString, PLATFORM_TYPE_STRING_MAX_SIZE, UNKNOWN_STRING_NAME,
+        AsciiStrLen(UNKNOWN_STRING_NAME));
   }
 
+  // Get Product Name
   CHAR8 *SmbiosSystemModel = (CHAR8 *)FixedPcdGetPtr(PcdSmbiosSystemModel);
   if (AsciiStrLen(SmbiosSystemModel) > 0) {
     AsciiStrnCpyS(
         ProductNameString, PLATFORM_TYPE_STRING_MAX_SIZE, SmbiosSystemModel,
         AsciiStrLen(SmbiosSystemModel));
   }
-  // Get Product Name
-  else if (pEfiPlatformInfoProtocol != NULL) {
-    if (!EFI_ERROR(pEfiPlatformInfoProtocol->GetPlatformInfo(
-            pEfiPlatformInfoProtocol, &PlatformInfo))) {
-      EFI_PLATFORMINFO_PLATFORM_TYPE platformInfoType = PlatformInfo.platform;
-
-      if (PlatformInfo.platform >= EFI_PLATFORMINFO_NUM_TYPES) {
-        platformInfoType = EFI_PLATFORMINFO_TYPE_UNKNOWN;
-      }
-
-      // HHG Platform was introduced with Lahaina later in the release cycle
-      // It lacks a proper platform type, and instead makes use of the HDK type
-      // with specific subtype values.
-      // On lahaina, these subtype values are 1 and 2.
-      // On kailua, this subtype value is 1.
-      // It is confirmed on official kailua kernel sources that HHG is a
-      // dedicated platform It also would not make sense to merge it with HDKs
-      // due to numerous differences Detect HHG and override the type
-      // accordingly.
-      UINT16 IsHHGPlatform = 0;
-
-      if (mBoardProtocol != NULL) {
-        UINT16 SDFE = 0;
-        mBoardProtocol->GetChipFamily(
-            mBoardProtocol, (EFIChipInfoFamilyType *)&SDFE);
-
-        // CHIPINFO_FAMILY_LAHAINA = 105
-        if (SDFE == 105) {
-          if (platformInfoType == EFI_PLATFORMINFO_TYPE_HDK &&
-              (PlatformInfo.subtype == 1 || PlatformInfo.subtype == 2)) {
-            // HHG
-            IsHHGPlatform = 1;
-          }
-        }
-        // CHIPINFO_FAMILY_KAILUA = 127
-        else if (SDFE == 127) {
-          if (platformInfoType == EFI_PLATFORMINFO_TYPE_HDK &&
-              PlatformInfo.subtype == 1) {
-            // HHG
-            IsHHGPlatform = 1;
-          }
-        }
-      }
-
-      if (IsHHGPlatform == 1) {
-        AsciiStrnCpyS(
-            ProductNameString, PLATFORM_TYPE_STRING_MAX_SIZE, "HHG",
-            AsciiStrLen("HHG"));
-      }
-      else {
-        AsciiStrnCpyS(
-            ProductNameString, PLATFORM_TYPE_STRING_MAX_SIZE,
-            PlatformTypeStrings[platformInfoType],
-            AsciiStrLen(PlatformTypeStrings[platformInfoType]));
-      }
-    }
-  }
-  else {
+  else if (EFI_ERROR(RetrievePlatformName(ProductNameString))) {
     AsciiStrnCpyS(
-        ProductNameString, PLATFORM_TYPE_STRING_MAX_SIZE, "Not Specified",
-        AsciiStrLen("Not Specified"));
+        ProductNameString, PLATFORM_TYPE_STRING_MAX_SIZE, UNKNOWN_STRING_NAME,
+        AsciiStrLen(UNKNOWN_STRING_NAME));
+  }
+
+  // Get Board Name
+  CHAR8 *SmbiosBoardModel = (CHAR8 *)FixedPcdGetPtr(PcdSmbiosBoardModel);
+  if (AsciiStrLen(SmbiosBoardModel) > 0) {
+    AsciiStrnCpyS(
+        BoardNameString, PLATFORM_TYPE_STRING_MAX_SIZE, SmbiosBoardModel,
+        AsciiStrLen(SmbiosBoardModel));
+  }
+  else if (EFI_ERROR(RetrievePlatformName(BoardNameString))) {
+    AsciiStrnCpyS(
+        BoardNameString, PLATFORM_TYPE_STRING_MAX_SIZE, UNKNOWN_STRING_NAME,
+        AsciiStrLen(UNKNOWN_STRING_NAME));
   }
 
   // Get SystemMemorySize
@@ -1095,7 +1171,7 @@ SmBiosTableDxeInitialize(
   SysInfoUpdateSmbiosType1(
       ProductNameString, VersionString, SerialNumberString, FamilyString,
       serial);
-  BoardInfoUpdateSmbiosType2(SerialNumberString);
+  BoardInfoUpdateSmbiosType2(SerialNumberString, BoardNameString);
   EnclosureInfoUpdateSmbiosType3(SerialNumberString);
   ProcessorInfoUpdateSmbiosType4(PcdGet32(PcdCoreCount));
   CacheInfoUpdateSmbiosType7();
