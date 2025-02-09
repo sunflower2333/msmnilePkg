@@ -1,7 +1,6 @@
 [PcdsFixedAtBuild.common]
 gAndromedaPkgTokenSpaceGuid.PcdMipiFrameBufferWidth|1080
 gAndromedaPkgTokenSpaceGuid.PcdMipiFrameBufferHeight|2400
-#gAndromedaPkgTokenSpaceGuid.PcdMipiFrameBufferPixelBpp|32
 
 # Smbios Info
 gAndromedaPkgTokenSpaceGuid.PcdSmbiosProcessorModel|"Snapdragon (TM) 855+ @ 2.96 GHz"

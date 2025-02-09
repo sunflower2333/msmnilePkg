@@ -1,7 +1,6 @@
 [PcdsFixedAtBuild.common]
 gAndromedaPkgTokenSpaceGuid.PcdMipiFrameBufferWidth|1920
 gAndromedaPkgTokenSpaceGuid.PcdMipiFrameBufferHeight|1080
-#gAndromedaPkgTokenSpaceGuid.PcdMipiFrameBufferPixelBpp|32
 
 # Display Caller
 gAndromedaPkgTokenSpaceGuid.PcdDisplayCallerExitDisableDisplay|FALSE

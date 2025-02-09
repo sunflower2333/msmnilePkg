@@ -1,0 +1,26 @@
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = UartDmSerialPortLib
+  FILE_GUID                      = CB768406-7DE6-49B6-BC2C-F324E110DE5A
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = SerialPortLib
+
+[Sources.common]
+  UartDmSerialPortLib.c
+  uart_dm_rw.c
+
+[LibraryClasses]
+  HobLib
+  IoLib
+  TimerLib
+
+[Packages]
+  AndromedaPkg/AndromedaPkg.dec
+  ArmPkg/ArmPkg.dec
+  ArmPlatformPkg/ArmPlatformPkg.dec
+  EmbeddedPkg/EmbeddedPkg.dec
+  MdePkg/MdePkg.dec
+
+[Pcd]
+  gAndromedaPkgTokenSpaceGuid.PcdUartSerialBase

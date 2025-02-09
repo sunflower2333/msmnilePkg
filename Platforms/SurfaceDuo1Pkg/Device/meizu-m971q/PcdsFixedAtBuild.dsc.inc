@@ -1,7 +1,6 @@
 [PcdsFixedAtBuild.common]
 gAndromedaPkgTokenSpaceGuid.PcdMipiFrameBufferWidth|1080
 gAndromedaPkgTokenSpaceGuid.PcdMipiFrameBufferHeight|2232
-#gAndromedaPkgTokenSpaceGuid.PcdMipiFrameBufferPixelBpp|32
 
 # Smbios Info
 gAndromedaPkgTokenSpaceGuid.PcdSmbiosSystemBrand|"Meizu"

@@ -1,7 +1,6 @@
 [PcdsFixedAtBuild.common]
 gAndromedaPkgTokenSpaceGuid.PcdMipiFrameBufferWidth|720
 gAndromedaPkgTokenSpaceGuid.PcdMipiFrameBufferHeight|1280
-#gAndromedaPkgTokenSpaceGuid.PcdMipiFrameBufferPixelBpp|32
 
 # Smbios Info
 gAndromedaPkgTokenSpaceGuid.PcdSmbiosSystemBrand|"HTC"

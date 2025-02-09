@@ -200,21 +200,25 @@
 #######################
 # Add UART section here.
 !if $(USE_SCREEN_FOR_SERIAL_OUTPUT) == 1
-!if $(USE_MEMORY_FOR_SERIAL_OUTPUT) == 1
-  SerialPortLib|AndromedaPkg/Library/FrameBufferInMemorySerialPortLib/FrameBufferInMemorySerialPortLib.inf
+  !if $(USE_MEMORY_FOR_SERIAL_OUTPUT) == 1
+    SerialPortLib|AndromedaPkg/Library/FrameBufferInMemorySerialPortLib/FrameBufferInMemorySerialPortLib.inf
+  !else
+    SerialPortLib|AndromedaPkg/Library/FrameBufferSerialPortLib/FrameBufferSerialPortLib.inf
+  !endif
 !else
-  SerialPortLib|AndromedaPkg/Library/FrameBufferSerialPortLib/FrameBufferSerialPortLib.inf
-!endif
-!else
-!if $(USE_MEMORY_FOR_SERIAL_OUTPUT) == 1
-  SerialPortLib|AndromedaPkg/Library/InMemorySerialPortLib/InMemorySerialPortLib.inf
-!else
-!if $(USE_UART_FOR_SERIAL_OUTPUT) == 1
-    SerialPortLib|AndromedaPkg/Library/QcomGeniSerialPortLib/QcomGeniSerialPortLib.inf
-!else
-  SerialPortLib|MdePkg/Library/BaseSerialPortLibNull/BaseSerialPortLibNull.inf
-!endif
-!endif
+  !if $(USE_MEMORY_FOR_SERIAL_OUTPUT) == 1
+    SerialPortLib|AndromedaPkg/Library/InMemorySerialPortLib/InMemorySerialPortLib.inf
+  !else
+    !if $(USE_UART_GENI_FOR_SERIAL_OUTPUT) == 1
+      SerialPortLib|AndromedaPkg/Library/QcomGeniSerialPortLib/QcomGeniSerialPortLib.inf
+    !else
+      !if $(USE_UART_DM_FOR_SERIAL_OUTPUT) == 1
+        SerialPortLib|AndromedaPkg/Library/UartDmSerialPortLib/UartDmSerialPortLib.inf
+      !else
+        SerialPortLib|MdePkg/Library/BaseSerialPortLibNull/BaseSerialPortLibNull.inf
+      !endif
+    !endif
+  !endif
 !endif
 #
 ########################

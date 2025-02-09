@@ -31,9 +31,11 @@
   FLASH_DEFINITION               = $(PACKAGE_NAME)/$(PLATFORM_NAME).fdf
   SECURE_BOOT                    = 0
   USE_PHYSICAL_TIMER             = 0
-  USE_SCREEN_FOR_SERIAL_OUTPUT   = 0
-  USE_UART_FOR_SERIAL_OUTPUT     = 0
-  USE_MEMORY_FOR_SERIAL_OUTPUT   = 0
+
+  USE_SCREEN_FOR_SERIAL_OUTPUT    = 0
+  USE_UART_GENI_FOR_SERIAL_OUTPUT = 0
+  USE_UART_DM_FOR_SERIAL_OUTPUT   = 0
+  USE_MEMORY_FOR_SERIAL_OUTPUT    = 0
 
   DEFAULT_KEYS                   = TRUE
   PK_DEFAULT_FILE                = AndromedaPkg/Include/Resources/SecureBoot/keystore/WOAMSMNILE-PK.der

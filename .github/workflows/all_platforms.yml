@@ -96,6 +96,11 @@ jobs:
               chipname: "sdm845"
             },
             {
+              platform: "IstariPkg",
+              codename: "istari",
+              chipname: "msm8996"
+            },
+            {
               platform: "NazgulPkg",
               codename: "nazgul",
               chipname: "msm8998"

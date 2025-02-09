@@ -1,0 +1,8 @@
+{
+    "platform": "Msm8996",
+    "package" : "IstariPkg",
+    "bootshim": {
+        "UEFI_BASE": "0xA0000000",
+        "UEFI_SIZE": "0x00300000"
+    }
+}
