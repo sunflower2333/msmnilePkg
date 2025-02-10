@@ -36,10 +36,18 @@ UINT64  mSystemMemoryEnd = FixedPcdGet64 (PcdSystemMemoryBase) +
 VOID
 MemoryTest(VOID)
 {
+  CHAR8                       Buffer[100];
+  UINTN                       CharCount;
+
   // RAM Sanity testing begins here.
   PARM_MEMORY_REGION_DESCRIPTOR_EX MemoryDescriptorEx = GetPlatformMemoryMap();
 
-  DEBUG((EFI_D_ERROR, "Testing RAM. Please wait.\n"));
+  CharCount = AsciiSPrint (
+                Buffer,
+                sizeof (Buffer),
+                "Testing RAM. Please wait.\n\r"
+                );
+  SerialPortWrite ((UINT8 *)Buffer, CharCount);
 
   // Run through each memory descriptor
   while (MemoryDescriptorEx->Length != 0) {
@@ -59,19 +67,43 @@ MemoryTest(VOID)
         AsciiStriCmp("HLOS 4", MemoryDescriptorEx->Name) != 0 &&
         AsciiStriCmp("UEFI Stack", MemoryDescriptorEx->Name) != 0) {
 
-      DEBUG((EFI_D_ERROR, "Testing %a. Please wait.\n", MemoryDescriptorEx->Name));
+      CharCount = AsciiSPrint (
+                    Buffer,
+                    sizeof (Buffer),
+                    "Testing %a. Please wait.\n\r",
+                    MemoryDescriptorEx->Name
+                    );
+      SerialPortWrite ((UINT8 *)Buffer, CharCount);
 
       for (UINT64 i = 0; i < MemoryDescriptorEx->Length; i += sizeof(UINT64)) {
         MmioWrite64(MemoryDescriptorEx->Address + i, 0);
-        DEBUG((EFI_D_ERROR, "\rTesting addr: %p", MemoryDescriptorEx->Address + i));
+        
+        CharCount = AsciiSPrint (
+                      Buffer,
+                      sizeof (Buffer),
+                      "\rTesting addr: %p",
+                      MemoryDescriptorEx->Address + i
+                      );
+        SerialPortWrite ((UINT8 *)Buffer, CharCount);
       }
 
-      DEBUG((EFI_D_ERROR, "Testing %a is finished.\n", MemoryDescriptorEx->Name));
+      CharCount = AsciiSPrint (
+                    Buffer,
+                    sizeof (Buffer),
+                    "Testing %a is finished.\n\r",
+                    MemoryDescriptorEx->Name
+                    );
+      SerialPortWrite ((UINT8 *)Buffer, CharCount);
     }
     MemoryDescriptorEx++;
   }
 
-  DEBUG((EFI_D_ERROR, "Testing RAM is finished.\n"));
+  CharCount = AsciiSPrint (
+                Buffer,
+                sizeof (Buffer),
+                "Testing RAM is finished.\n\r"
+                );
+  SerialPortWrite ((UINT8 *)Buffer, CharCount);
 }
 
 EFI_STATUS
