@@ -217,6 +217,16 @@ VOID CheckMdpConfig(VOID)
   MmioWrite32(APSS_WDT_BASE + APSS_WDT_ENABLE_OFFSET, Enable);
 }*/
 
+#define FB_BGRA8888_BLACK 0xff000000
+#define FB_BGRA8888_WHITE 0xffffffff
+#define FB_BGRA8888_CYAN 0xff00ffff
+#define FB_BGRA8888_BLUE 0xff0000ff
+#define FB_BGRA8888_SILVER 0xffc0c0c0
+#define FB_BGRA8888_YELLOW 0xffffff00
+#define FB_BGRA8888_ORANGE 0xffffa500
+#define FB_BGRA8888_RED 0xffff0000
+#define FB_BGRA8888_GREEN 0xff00ff00
+
 VOID PlatformInitialize(VOID)
 {
   // Disable WatchDog Timer
@@ -224,4 +234,22 @@ VOID PlatformInitialize(VOID)
 
   // Fix MDP Configuration
   CheckMdpConfig();
+
+  // Test code
+  char *Pixels  = (void *)0x80400000;
+  UINTN BgColor = FB_BGRA8888_CYAN;
+  UINTN gBpp    = 32;
+
+  // Set to black color.
+  for (UINTN i = 0; i < 1600; i++) {
+    for (UINTN j = 0; j < 2560; j++) {
+      BgColor = FB_BGRA8888_CYAN;
+      // Set pixel bit
+      for (UINTN p = 0; p < (gBpp / 8); p++) {
+        *Pixels = (unsigned char)BgColor;
+        BgColor = BgColor >> 8;
+        Pixels++;
+      }
+    }
+  }
 }
