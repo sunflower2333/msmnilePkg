@@ -60,10 +60,10 @@ VOID CheckMdpConfig(VOID)
 {
   //UINT32 Width = FixedPcdGet32(PcdMipiFrameBufferWidth);
 
-  CHAR8                       Buffer[100];
+  /*CHAR8                       Buffer[100];
   UINTN                       CharCount;
   
-  /*UINT32 VIG0Base = MmioRead32(MDP_VP_0_VIG_0_BASE + PIPE_SSPP_SRC0_ADDR);
+  UINT32 VIG0Base = MmioRead32(MDP_VP_0_VIG_0_BASE + PIPE_SSPP_SRC0_ADDR);
   UINT32 VIG1Base = MmioRead32(MDP_VP_0_VIG_1_BASE + PIPE_SSPP_SRC0_ADDR);
   UINT32 RGB0Base = MmioRead32(MDP_VP_0_RGB_0_BASE + PIPE_SSPP_SRC0_ADDR);
   UINT32 RGB1Base = MmioRead32(MDP_VP_0_RGB_1_BASE + PIPE_SSPP_SRC0_ADDR);
