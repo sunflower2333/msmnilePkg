@@ -2,6 +2,7 @@
 #include <Library/IoLib.h>
 #include <Library/PcdLib.h>
 #include <Library/PlatformPrePiLib.h>
+#include <Library/SerialPortLib.h>
 #include "PlatformUtils.h"
 
 // Based on https://github.com/Dominduchami/Nexus5XPkg
@@ -44,6 +45,8 @@ enum {
   SSPP_SRC_UNPACK_PATTERN_XRGB  = 0x3 << 24 | 0x2 << 16 | 0x0 << 8 | 0x1 << 0,
 };
 
+#define PIPE_SSPP_SRC0_ADDR                     0x14
+
 /*
  * Reconfigure the framebuffer to a BGRA 32bpp one (windows requirements)
  *
@@ -54,6 +57,66 @@ enum {
  */
 VOID CheckMdpConfig(VOID)
 {
+  CHAR8                       Buffer[100];
+  UINTN                       CharCount;
+  
+  UINT32 VIG0Base = MmioRead32(MDP_VP_0_VIG_0_BASE + PIPE_SSPP_SRC0_ADDR);
+  UINT32 VIG1Base = MmioRead32(MDP_VP_0_VIG_1_BASE + PIPE_SSPP_SRC0_ADDR);
+  UINT32 RGB0Base = MmioRead32(MDP_VP_0_RGB_0_BASE + PIPE_SSPP_SRC0_ADDR);
+  UINT32 RGB1Base = MmioRead32(MDP_VP_0_RGB_1_BASE + PIPE_SSPP_SRC0_ADDR);
+  UINT32 DMA0Base = MmioRead32(MDP_VP_0_DMA_0_BASE + PIPE_SSPP_SRC0_ADDR);
+  UINT32 DMA1Base = MmioRead32(MDP_VP_0_DMA_1_BASE + PIPE_SSPP_SRC0_ADDR);
+  UINT32 MIXER0Base = MmioRead32(MDP_VP_0_MIXER_0_BASE + PIPE_SSPP_SRC0_ADDR);
+  UINT32 MIXER1Base = MmioRead32(MDP_VP_0_MIXER_1_BASE + PIPE_SSPP_SRC0_ADDR);
+
+  if (VIG0Base)
+  {
+    CharCount = AsciiSPrint (Buffer, sizeof (Buffer), "VIG0 Pipe Detected at %p\n\r", VIG0Base);
+    SerialPortWrite ((UINT8 *)Buffer, CharCount);
+  }
+
+  if (VIG1Base)
+  {
+    CharCount = AsciiSPrint (Buffer, sizeof (Buffer), "VIG1 Pipe Detected at %p\n", VIG1Base);
+    SerialPortWrite ((UINT8 *)Buffer, CharCount);
+  }
+
+  if (RGB0Base)
+  {
+    CharCount = AsciiSPrint (Buffer, sizeof (Buffer), "RGB0 Pipe Detected at %p\n", RGB0Base);
+    SerialPortWrite ((UINT8 *)Buffer, CharCount);
+  }
+
+  if (RGB1Base)
+  {
+    CharCount = AsciiSPrint (Buffer, sizeof (Buffer), "RGB1 Pipe Detected at %p\n", RGB1Base);
+    SerialPortWrite ((UINT8 *)Buffer, CharCount);
+  }
+  
+  if (DMA0Base)
+  {
+    CharCount = AsciiSPrint (Buffer, sizeof (Buffer), "DM0 Pipe Detected at %p\n", DMA0Base);
+    SerialPortWrite ((UINT8 *)Buffer, CharCount);
+  }
+
+  if (DMA1Base)
+  {
+    CharCount = AsciiSPrint (Buffer, sizeof (Buffer), "DMA1 Pipe Detected at %p\n", DMA1Base);
+    SerialPortWrite ((UINT8 *)Buffer, CharCount);
+  }
+  
+  if (MIXER0Base)
+  {
+    CharCount = AsciiSPrint (Buffer, sizeof (Buffer), "MIXER0 Pipe Detected at %p\n", MIXER0Base);
+    SerialPortWrite ((UINT8 *)Buffer, CharCount);
+  }
+
+  if (MIXER1Base)
+  {
+    CharCount = AsciiSPrint (Buffer, sizeof (Buffer), "MIXER1 Pipe Detected at %p\n", MIXER1Base);
+    SerialPortWrite ((UINT8 *)Buffer, CharCount);
+  }
+
   UINT32 Width = FixedPcdGet32(PcdMipiFrameBufferWidth);
 
   // 0x000237FF
