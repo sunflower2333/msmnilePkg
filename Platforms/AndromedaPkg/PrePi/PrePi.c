@@ -33,21 +33,17 @@
 UINT64  mSystemMemoryEnd = FixedPcdGet64 (PcdSystemMemoryBase) +
                            FixedPcdGet64 (PcdSystemMemorySize) - 1;
 
-VOID
-MemoryTest(VOID)
+VOID MemoryTest(VOID)
 {
-  CHAR8                       Buffer[100];
-  UINTN                       CharCount;
+  CHAR8 Buffer[100];
+  UINTN CharCount;
 
   // RAM Sanity testing begins here.
   PARM_MEMORY_REGION_DESCRIPTOR_EX MemoryDescriptorEx = GetPlatformMemoryMap();
 
-  CharCount = AsciiSPrint (
-                Buffer,
-                sizeof (Buffer),
-                "Testing RAM. Please wait.\n\r"
-                );
-  SerialPortWrite ((UINT8 *)Buffer, CharCount);
+  CharCount =
+      AsciiSPrint(Buffer, sizeof(Buffer), "Testing RAM. Please wait.\n\r");
+  SerialPortWrite((UINT8 *)Buffer, CharCount);
 
   // Run through each memory descriptor
   while (MemoryDescriptorEx->Length != 0) {
@@ -61,49 +57,45 @@ MemoryTest(VOID)
         AsciiStriCmp("UEFI FD", MemoryDescriptorEx->Name) != 0 &&
         AsciiStriCmp("UEFI Mem Pool", MemoryDescriptorEx->Name) != 0 &&
         AsciiStriCmp("CPU Vectors", MemoryDescriptorEx->Name) != 0 &&
-        AsciiStriCmp("HLOS 1", MemoryDescriptorEx->Name) != 0 &&
-        AsciiStriCmp("HLOS 2", MemoryDescriptorEx->Name) != 0 &&
-        AsciiStriCmp("HLOS 3", MemoryDescriptorEx->Name) != 0 &&
-        AsciiStriCmp("HLOS 4", MemoryDescriptorEx->Name) != 0 &&
+        //AsciiStriCmp("HLOS 1", MemoryDescriptorEx->Name) != 0 &&
+        //AsciiStriCmp("HLOS 2", MemoryDescriptorEx->Name) != 0 &&
+        //AsciiStriCmp("HLOS 3", MemoryDescriptorEx->Name) != 0 &&
+        //AsciiStriCmp("HLOS 4", MemoryDescriptorEx->Name) != 0 &&
+        AsciiStriCmp("FBPT Payload", MemoryDescriptorEx->Name) != 0 &&
+        AsciiStriCmp("Capsule Header", MemoryDescriptorEx->Name) != 0 &&
+        AsciiStriCmp("TPM Control Area", MemoryDescriptorEx->Name) != 0 &&
+        AsciiStriCmp("UEFI Info Block", MemoryDescriptorEx->Name) != 0 &&
+        AsciiStriCmp("Reset Data", MemoryDescriptorEx->Name) != 0 &&
+        AsciiStriCmp("Reser. Uncached 0", MemoryDescriptorEx->Name) != 0 &&
+        AsciiStriCmp("Reserved Cached 0", MemoryDescriptorEx->Name) != 0 &&
         AsciiStriCmp("UEFI Stack", MemoryDescriptorEx->Name) != 0) {
 
-      CharCount = AsciiSPrint (
-                    Buffer,
-                    sizeof (Buffer),
-                    "Testing %a. Please wait.\n\r",
-                    MemoryDescriptorEx->Name
-                    );
-      SerialPortWrite ((UINT8 *)Buffer, CharCount);
+      CharCount = AsciiSPrint(
+          Buffer, sizeof(Buffer), "Testing %a. Please wait.\n\r",
+          MemoryDescriptorEx->Name);
+      SerialPortWrite((UINT8 *)Buffer, CharCount);
 
       for (UINT64 i = 0; i < MemoryDescriptorEx->Length; i += sizeof(UINT64)) {
+        CharCount = AsciiSPrint(
+            Buffer, sizeof(Buffer), "\rTesting addr: %p",
+            MemoryDescriptorEx->Address + i);
+
         MmioWrite64(MemoryDescriptorEx->Address + i, 0);
-        
-        CharCount = AsciiSPrint (
-                      Buffer,
-                      sizeof (Buffer),
-                      "\rTesting addr: %p",
-                      MemoryDescriptorEx->Address + i
-                      );
-        SerialPortWrite ((UINT8 *)Buffer, CharCount);
+
+        SerialPortWrite((UINT8 *)Buffer, CharCount);
       }
 
-      CharCount = AsciiSPrint (
-                    Buffer,
-                    sizeof (Buffer),
-                    "Testing %a is finished.\n\r",
-                    MemoryDescriptorEx->Name
-                    );
-      SerialPortWrite ((UINT8 *)Buffer, CharCount);
+      CharCount = AsciiSPrint(
+          Buffer, sizeof(Buffer), "\n\rTesting %a is finished.\n\r",
+          MemoryDescriptorEx->Name);
+      SerialPortWrite((UINT8 *)Buffer, CharCount);
     }
     MemoryDescriptorEx++;
   }
 
-  CharCount = AsciiSPrint (
-                Buffer,
-                sizeof (Buffer),
-                "Testing RAM is finished.\n\r"
-                );
-  SerialPortWrite ((UINT8 *)Buffer, CharCount);
+  CharCount =
+      AsciiSPrint(Buffer, sizeof(Buffer), "Testing RAM is finished.\n\r");
+  SerialPortWrite((UINT8 *)Buffer, CharCount);
 }
 
 EFI_STATUS
