@@ -22,11 +22,9 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"CPU Vectors",       0x80C40000, 0x00010000, AddMem, SYS_MEM, SYS_MEM_CAP, BsCode, WRITE_BACK},
     {"Reserved Cached 0", 0x80C50000, 0x000B0000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
     //{"HLOS 2",            0x80D00000, 0x03300000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
-    {"HLOS 2",            0x80D00000, 0x02701000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
-    // NB: HDMI Region starts at B1C00000
-    // END: 0x85800000, (size: 0x23FF000) lets set it to 0x00800000 instead...
-    {"Display Reserved",  0x83401000, 0x00800000, AddMem, MEM_RES, SYS_MEM_CAP, Reserv, WRITE_THROUGH},
-    {"RAM Partition",     0x83C01000, 0x003FF000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
+    {"HLOS 2",            0x80D00000, 0x02700000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
+    {"Display Reserved",  0x83400000, 0x00800000, AddMem, MEM_RES, SYS_MEM_CAP, Reserv, WRITE_THROUGH},
+    {"RAM Partition",     0x83C00000, 0x00400000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
     {"HLOS 3",            0x84000000, 0x01800000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
     {"HYP",               0x85800000, 0x00600000, AddMem, SYS_MEM, SYS_MEM_CAP, Reserv, NS_DEVICE},
     {"MPSS_EFS",          0x85E00000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP, Reserv, NS_DEVICE},
