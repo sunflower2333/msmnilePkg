@@ -34,7 +34,7 @@
 #define MDP_PP_AUTOREFRESH_CONFIG 0x030
 #define AUTOREFRESH_FRAMENUM 1
 
-enum {
+/*enum {
   SSPP_SRC_FORMAT_SRC_RGB565    = 0x1 << 9 | 0x1 << 4 | 0x1 << 2 | 0x2 << 0,
   SSPP_SRC_FORMAT_SRC_RGB888    = 0x2 << 9 | 0x3 << 4 | 0x3 << 2 | 0x3 << 0,
   SSPP_SRC_FORMAT_SRC_XRGB8888  = 0x3 << 9 | 0x3 << 6 | 0x3 << 4 | 0x3 << 2 | 0x3 << 0,
@@ -44,7 +44,7 @@ enum {
 
   SSPP_SRC_UNPACK_PATTERN_RGB   = 0x0 << 24 | 0x2 << 16 | 0x0 << 8 | 0x1 << 0,
   SSPP_SRC_UNPACK_PATTERN_XRGB  = 0x3 << 24 | 0x2 << 16 | 0x0 << 8 | 0x1 << 0,
-};
+};*/
 
 #define PIPE_SSPP_SRC0_ADDR                     0x14
 
@@ -58,6 +58,8 @@ enum {
  */
 VOID CheckMdpConfig(VOID)
 {
+  //UINT32 Width = FixedPcdGet32(PcdMipiFrameBufferWidth);
+
   CHAR8                       Buffer[100];
   UINTN                       CharCount;
   
@@ -74,53 +76,75 @@ VOID CheckMdpConfig(VOID)
   {
     CharCount = AsciiSPrint (Buffer, sizeof (Buffer), "VIG0 Pipe Detected at %p\n\r", VIG0Base);
     SerialPortWrite ((UINT8 *)Buffer, CharCount);
+
+    MmioWrite32(MDP_VP_0_VIG_0_BASE + PIPE_SSPP_SRC0_ADDR, 0x80400000);
+    MmioWrite32(MDP_CTL_0_BASE + CTL_FLUSH, (1 << (3)));
   }
 
   if (VIG1Base)
   {
     CharCount = AsciiSPrint (Buffer, sizeof (Buffer), "VIG1 Pipe Detected at %p\n", VIG1Base);
     SerialPortWrite ((UINT8 *)Buffer, CharCount);
+
+    MmioWrite32(MDP_VP_0_VIG_1_BASE + PIPE_SSPP_SRC0_ADDR, 0x80400000);
+    MmioWrite32(MDP_CTL_1_BASE + CTL_FLUSH, (1 << (3)));
   }
 
   if (RGB0Base)
   {
     CharCount = AsciiSPrint (Buffer, sizeof (Buffer), "RGB0 Pipe Detected at %p\n", RGB0Base);
     SerialPortWrite ((UINT8 *)Buffer, CharCount);
+
+    MmioWrite32(MDP_VP_0_RGB_0_BASE + PIPE_SSPP_SRC0_ADDR, 0x80400000);
+    MmioWrite32(MDP_CTL_0_BASE + CTL_FLUSH, (1 << (3)));
   }
 
   if (RGB1Base)
   {
     CharCount = AsciiSPrint (Buffer, sizeof (Buffer), "RGB1 Pipe Detected at %p\n", RGB1Base);
     SerialPortWrite ((UINT8 *)Buffer, CharCount);
+
+    MmioWrite32(MDP_VP_0_RGB_1_BASE + PIPE_SSPP_SRC0_ADDR, 0x80400000);
+    MmioWrite32(MDP_CTL_1_BASE + CTL_FLUSH, (1 << (3)));
   }
   
   if (DMA0Base)
   {
     CharCount = AsciiSPrint (Buffer, sizeof (Buffer), "DM0 Pipe Detected at %p\n", DMA0Base);
     SerialPortWrite ((UINT8 *)Buffer, CharCount);
+
+    MmioWrite32(MDP_VP_0_DMA_0_BASE + PIPE_SSPP_SRC0_ADDR, 0x80400000);
+    MmioWrite32(MDP_CTL_0_BASE + CTL_FLUSH, (1 << (3)));
   }
 
   if (DMA1Base)
   {
     CharCount = AsciiSPrint (Buffer, sizeof (Buffer), "DMA1 Pipe Detected at %p\n", DMA1Base);
     SerialPortWrite ((UINT8 *)Buffer, CharCount);
+
+    MmioWrite32(MDP_VP_0_DMA_1_BASE + PIPE_SSPP_SRC0_ADDR, 0x80400000);
+    MmioWrite32(MDP_CTL_1_BASE + CTL_FLUSH, (1 << (3)));
   }
   
   if (MIXER0Base)
   {
     CharCount = AsciiSPrint (Buffer, sizeof (Buffer), "MIXER0 Pipe Detected at %p\n", MIXER0Base);
     SerialPortWrite ((UINT8 *)Buffer, CharCount);
+
+    MmioWrite32(MDP_VP_0_MIXER_0_BASE + PIPE_SSPP_SRC0_ADDR, 0x80400000);
+    MmioWrite32(MDP_CTL_0_BASE + CTL_FLUSH, (1 << (3)));
   }
 
   if (MIXER1Base)
   {
     CharCount = AsciiSPrint (Buffer, sizeof (Buffer), "MIXER1 Pipe Detected at %p\n", MIXER1Base);
     SerialPortWrite ((UINT8 *)Buffer, CharCount);
+
+    MmioWrite32(MDP_VP_0_MIXER_1_BASE + PIPE_SSPP_SRC0_ADDR, 0x80400000);
+    MmioWrite32(MDP_CTL_1_BASE + CTL_FLUSH, (1 << (3)));
   }
 
-  UINT32 Width = FixedPcdGet32(PcdMipiFrameBufferWidth);
-
-  // 0x000237FF
+  /*// 0x000237FF
   //    0x20000 // UNPACK_TIGHT
   //     0x3000 // UNPACK_COUNT
   //      0x600 // SRC_BPP
@@ -180,7 +204,7 @@ VOID CheckMdpConfig(VOID)
   //MmioWrite32(MDP_CTL_1_BASE + CTL_FLUSH, (1 << (3)));
 
   MmioWrite32(MDP_CTL_0_BASE + CTL_FLUSH, (1 << (3)));
-  MmioWrite32(MDP_CTL_1_BASE + CTL_FLUSH, (1 << (3)));
+  MmioWrite32(MDP_CTL_1_BASE + CTL_FLUSH, (1 << (3)));*/
 }
 
 /*VOID SetWatchdogState(BOOLEAN Enable)
