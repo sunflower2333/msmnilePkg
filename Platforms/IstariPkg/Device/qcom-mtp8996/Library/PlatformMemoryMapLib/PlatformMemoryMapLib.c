@@ -26,7 +26,7 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"UEFI Stack",        0x80C00000, 0x00040000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
     {"CPU Vectors",       0x80C40000, 0x00010000, AddMem, SYS_MEM, SYS_MEM_CAP, BsCode, WRITE_BACK},
     {"Reserved Cached 0", 0x80C50000, 0x000B0000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
-    {"HLOS 2",            0x80D00000, 0x03300000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
+    //{"HLOS 2",            0x80D00000, 0x03300000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
     {"HLOS 3",            0x84000000, 0x01800000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
     {"HYP",               0x85800000, 0x00600000, AddMem, SYS_MEM, SYS_MEM_CAP, Reserv, NS_DEVICE},
     {"MPSS_EFS",          0x85E00000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP, Reserv, NS_DEVICE},
