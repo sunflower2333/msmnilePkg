@@ -7,9 +7,7 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     /* DDR Regions */
     /* DDR Bank 0 Start */
     {"DBI Dump",          0x80010000, 0x00014000, NoHob,  MMAP_IO, INITIALIZED, Conv,   NS_DEVICE},
-    {"RAM Partition",     0x80024000, 0x000DC000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
     {"HLOS 1",            0x80100000, 0x00100000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
-    {"RAM Partition",     0x80200000, 0x00180000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
     /* Removed due to crash issues, overlapped code issues (LK boot related?)
     {"UEFI FD",           0x80200000, 0x00180000, AddMem, SYS_MEM, SYS_MEM_CAP, BsCode, WRITE_BACK}, */
     {"FBPT Payload",      0x80380000, 0x00001000, AddMem, SYS_MEM, SYS_MEM_CAP, RtData, UNCACHED_UNBUFFERED},
@@ -26,7 +24,6 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"Reser. Uncached 0", 0x80390000, 0x00070000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, UNCACHED_UNBUFFERED}, /* There goes the other part */
     /* Original value from uefiplat.cfg
     {"Display Reserved",  0x80400000, 0x00800000, AddMem, MEM_RES, WRITE_THROUGH, MaxMem, WRITE_THROUGH}, */
-    {"RAM Partition",     0x80400000, 0x00800000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
     {"UEFI Stack",        0x80C00000, 0x00040000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
     {"CPU Vectors",       0x80C40000, 0x00010000, AddMem, SYS_MEM, SYS_MEM_CAP, BsCode, WRITE_BACK},
     {"Reserved Cached 0", 0x80C50000, 0x000B0000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
@@ -35,7 +32,6 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"HLOS 2",            0x80D00000, 0x02701000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
     /* Adjusted value from LK framebuffer setup, ideally we would want to move this using MDP5 registers */
     {"Display Reserved",  0x83401000, 0x00800000, AddMem, MEM_RES, WRITE_THROUGH, MaxMem, WRITE_THROUGH},
-    {"RAM Partition",     0x83C01000, 0x003FF000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
     {"HLOS 3",            0x84000000, 0x01800000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
     {"HYP",               0x85800000, 0x00600000, AddMem, SYS_MEM, SYS_MEM_CAP, Reserv, NS_DEVICE},
     {"MPSS_EFS",          0x85E00000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP, Reserv, NS_DEVICE},
