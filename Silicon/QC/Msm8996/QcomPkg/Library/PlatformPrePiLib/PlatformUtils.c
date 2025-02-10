@@ -3,6 +3,7 @@
 #include <Library/PcdLib.h>
 #include <Library/PlatformPrePiLib.h>
 #include <Library/SerialPortLib.h>
+#include <Library/PrintLib.h>
 #include "PlatformUtils.h"
 
 // Based on https://github.com/Dominduchami/Nexus5XPkg

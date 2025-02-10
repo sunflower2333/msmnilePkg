@@ -16,6 +16,7 @@
 [LibraryClasses]
   BaseLib
   IoLib
+  PrintLib
 
 [FixedPcd]
   gAndromedaPkgTokenSpaceGuid.PcdMipiFrameBufferWidth
