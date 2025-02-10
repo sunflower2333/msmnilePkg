@@ -72,7 +72,7 @@ VOID CheckMdpConfig(VOID)
   UINT32 MIXER0Base = MmioRead32(MDP_VP_0_MIXER_0_BASE + PIPE_SSPP_SRC0_ADDR);
   UINT32 MIXER1Base = MmioRead32(MDP_VP_0_MIXER_1_BASE + PIPE_SSPP_SRC0_ADDR);
 
-  if (VIG0Base)
+  /*if (VIG0Base)
   {
     CharCount = AsciiSPrint (Buffer, sizeof (Buffer), "VIG0 Pipe Detected at %p\n\r", VIG0Base);
     SerialPortWrite ((UINT8 *)Buffer, CharCount);
@@ -142,7 +142,12 @@ VOID CheckMdpConfig(VOID)
 
     MmioWrite32(MDP_VP_0_MIXER_1_BASE + PIPE_SSPP_SRC0_ADDR, 0x80400000);
     MmioWrite32(MDP_CTL_1_BASE + CTL_FLUSH, (1 << (3)));
-  }
+  }*/
+
+  MmioWrite32(MDP_VP_0_VIG_0_BASE + PIPE_SSPP_SRC0_ADDR, 0x80400000);
+  MmioWrite32(MDP_VP_0_VIG_1_BASE + PIPE_SSPP_SRC0_ADDR, 0x80400000);
+  MmioWrite32(MDP_CTL_0_BASE + CTL_FLUSH, 0x40022041);
+  MmioWrite32(MDP_CTL_1_BASE + CTL_FLUSH, 0x20024082);
 
   /*// 0x000237FF
   //    0x20000 // UNPACK_TIGHT
