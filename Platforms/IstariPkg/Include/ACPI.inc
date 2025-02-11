@@ -1,8 +1,8 @@
 FILE FREEFORM = 7E374E25-8E01-4FEE-87F2-390C23C606CD {
     SECTION RAW = IstariPkg/ACPI/APIC.aml
-    SECTION RAW = IstariPkg/ACPI/BGRT.aml
-    SECTION RAW = IstariPkg/ACPI/CSRT.aml
-    SECTION RAW = IstariPkg/ACPI/DBG2.aml
+    #SECTION RAW = IstariPkg/ACPI/BGRT.aml
+    #SECTION RAW = IstariPkg/ACPI/CSRT.aml
+    #SECTION RAW = IstariPkg/ACPI/DBG2.aml
 #   SECTION RAW = IstariPkg/ACPI/DSDT.aml
     SECTION RAW = IstariPkg/Device/$(TARGET_DEVICE)/ACPI/DSDT.aml
     SECTION RAW = IstariPkg/ACPI/FACP.aml
@@ -13,8 +13,8 @@ FILE FREEFORM = 7E374E25-8E01-4FEE-87F2-390C23C606CD {
 #   SECTION RAW = IstariPkg/ACPI/MSDM.aml
 #   SECTION RAW = IstariPkg/ACPI/TPM2.aml
 #   SECTION RAW = IstariPkg/ACPI/XSDT.aml
-    SECTION RAW = SurfaceDuoACPI/QcomACPI/common/builtin/SSDT.aml
-    SECTION RAW = SurfaceDuoACPI/QcomACPI/common/builtin/TPMDev.dat
-    SECTION RAW = SurfaceDuoACPI/QcomACPI/common/builtin/SoftwareTpm2Table.aml
+    #SECTION RAW = SurfaceDuoACPI/QcomACPI/common/builtin/SSDT.aml
+    #SECTION RAW = SurfaceDuoACPI/QcomACPI/common/builtin/TPMDev.dat
+    #SECTION RAW = SurfaceDuoACPI/QcomACPI/common/builtin/SoftwareTpm2Table.aml
     SECTION UI = "AcpiTables"
 }

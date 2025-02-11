@@ -1,8 +1,8 @@
 [Components.common]
-IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/AdapterInformationDxe/AdapterInformationDxe.inf
-IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/OSConfigDxe/OSConfigDxe.inf
-IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/UsbMsdDxe/UsbMsdDxe.inf
-IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/XhciPciEmulationDxe/XhciPciEmulationDxe.inf
+#IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/AdapterInformationDxe/AdapterInformationDxe.inf
+#IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/OSConfigDxe/OSConfigDxe.inf
+#IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/UsbMsdDxe/UsbMsdDxe.inf
+#IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/XhciPciEmulationDxe/XhciPciEmulationDxe.inf
 IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/I2CDxe/I2CDxe.inf
 AndromedaPkg/Driver/SimpleFbDxe/SimpleFbDxe.inf
 
@@ -36,19 +36,19 @@ IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/TLMMDxe/TLMMDxe.inf
 IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/PlatformInfoDxe/PlatformInfoDxe.inf
 IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/PmicDxe/PmicDxe.inf
 #IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/ChargerExDxe/ChargerExDxe.inf
-IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/ChargerDxe/ChargerDxe.inf
+#IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/ChargerDxe/ChargerDxe.inf
 IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/AdcDxe/AdcDxe.inf
 IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/TsensDxe/TsensDxe.inf
-IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/MpPowerDxe/MpPowerDxe.inf
+#IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/MpPowerDxe/MpPowerDxe.inf
 #IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/UsbMsdDxe/UsbMsdDxe.inf
-IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/UsbDeviceDxe/UsbDeviceDxe.inf
+#IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/UsbDeviceDxe/UsbDeviceDxe.inf
 #IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/UsbConfigDxe/UsbConfigDxe.inf
 #IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/HashDxe/HashDxe.inf
 #IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/CipherDxe/CipherDxe.inf
 #IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/RNGDxe/RngDxe.inf
 #IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/QcomBds/QcomBds.inf
-IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/QdssDxe/QdssDxe.inf
+#IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/QdssDxe/QdssDxe.inf
 
 IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/ClockDxe/ClockDxe.inf
-IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/UsbConfigDxe/UsbConfigDxe.inf
+#IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/UsbConfigDxe/UsbConfigDxe.inf
 IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/UFSDxe/UFSDxe.inf

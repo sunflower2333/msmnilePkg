@@ -3,7 +3,7 @@ APRIORI DXE {
     INF MdeModulePkg/Core/Dxe/DxeMain.inf
     INF MdeModulePkg/Universal/PCD/Dxe/Pcd.inf
 
-    INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/EnvDxe/EnvDxe.inf
+    #INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/EnvDxe/EnvDxe.inf
 
     INF MdeModulePkg/Universal/ReportStatusCodeRouter/RuntimeDxe/ReportStatusCodeRouterRuntimeDxe.inf
     INF MdeModulePkg/Universal/StatusCodeHandler/RuntimeDxe/StatusCodeHandlerRuntimeDxe.inf
@@ -42,16 +42,16 @@ APRIORI DXE {
     INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/UFSDxe/UFSDxe.inf
     INF MdeModulePkg/Universal/WatchdogTimerDxe/WatchdogTimer.inf
 
-    FILE DRIVER = 5E0EAE60-EAED-4D75-B8BF-EDBBAABC3F09{
-        SECTION UI = "SecurityDxe"
-        SECTION PE32 = IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/SecurityDxe/SecurityDxe.efi
-    }
+    #FILE DRIVER = 5E0EAE60-EAED-4D75-B8BF-EDBBAABC3F09{
+    #    SECTION UI = "SecurityDxe"
+    #    SECTION PE32 = IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/SecurityDxe/SecurityDxe.efi
+    #}
     
     INF FatPkg/EnhancedFatDxe/Fat.inf
     INF MdeModulePkg/Bus/Pci/PciBusDxe/PciBusDxe.inf
 
     #INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/TzDxe/TzDxeLA.inf
-    INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/QdssDxe/QdssDxe.inf
+    #INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/QdssDxe/QdssDxe.inf
     INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/TLMMDxe/TLMMDxe.inf
     INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/SPMIDxe/SPMIDxe.inf
     INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/ResetRuntimeDxe/ResetRuntimeDxe.inf
@@ -79,35 +79,35 @@ APRIORI DXE {
 #    }
 
     INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/AdcDxe/AdcDxe.inf
-    INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/ChargerDxe/ChargerDxe.inf
-    INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/XhciPciEmulationDxe/XhciPciEmulationDxe.inf
+    #INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/ChargerDxe/ChargerDxe.inf
+    #INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/XhciPciEmulationDxe/XhciPciEmulationDxe.inf
 
     # INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/XhciDxe/XhciDxe.inf
-    FILE DRIVER = B7F50E91-A759-412C-ADE4-DCD03E7F7C28 {
-            SECTION PE32 = IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/XhciDxe/XhciDxe.efi
-            SECTION UI = "XhciDxe"
-    }
+    #FILE DRIVER = B7F50E91-A759-412C-ADE4-DCD03E7F7C28 {
+    #        SECTION PE32 = IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/XhciDxe/XhciDxe.efi
+    #        SECTION UI = "XhciDxe"
+    #}
 
     # INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/UsbBusDxe/UsbBusDxe.inf
-    FILE DRIVER = 240612B7-A063-11D4-9A3A-0090273FC14D {
-            SECTION PE32 = IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/UsbBusDxe/UsbBusDxe.efi
-            SECTION UI = "UsbBusDxe"
-    }
+    #FILE DRIVER = 240612B7-A063-11D4-9A3A-0090273FC14D {
+    #        SECTION PE32 = IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/UsbBusDxe/UsbBusDxe.efi
+    #        SECTION UI = "UsbBusDxe"
+    #}
 
     # INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/UsbKbDxe/UsbKbDxe.inf
-    FILE DRIVER = 2D2E62CF-9ECF-43B7-8219-94E7FC713DFE {
-            SECTION PE32 = IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/UsbKbDxe/UsbKbDxe.efi
-            SECTION UI = "UsbKbDxe"
-    }
+    #FILE DRIVER = 2D2E62CF-9ECF-43B7-8219-94E7FC713DFE {
+    #        SECTION PE32 = IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/UsbKbDxe/UsbKbDxe.efi
+    #        SECTION UI = "UsbKbDxe"
+    #}
 
     # INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/UsbMassStorageDxe/UsbMassStorageDxe.inf
-    FILE DRIVER = 9FB4B4A7-42C0-4BCD-8540-9BCC6711F83E {
-            SECTION PE32 = IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/UsbMassStorageDxe/UsbMassStorageDxe.efi
-            SECTION UI = "UsbMassStorageDxe"
-    }
+    #FILE DRIVER = 9FB4B4A7-42C0-4BCD-8540-9BCC6711F83E {
+    #        SECTION PE32 = IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/UsbMassStorageDxe/UsbMassStorageDxe.efi
+    #        SECTION UI = "UsbMassStorageDxe"
+    #}
 
-    INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/UsbConfigDxe/UsbConfigDxe.inf
-    INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/UsbDeviceDxe/UsbDeviceDxe.inf
+    #INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/UsbConfigDxe/UsbConfigDxe.inf
+    #INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/UsbDeviceDxe/UsbDeviceDxe.inf
     INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/TsensDxe/TsensDxe.inf
 
 #    INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/HashDxe/HashDxe.inf
@@ -121,10 +121,10 @@ APRIORI DXE {
         SECTION UI = "RngDxe"
         SECTION PE32 = IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/RNGDxe/RngDxe.efi
     }
-    INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/MpPowerDxe/MpPowerDxe.inf
+    #INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/MpPowerDxe/MpPowerDxe.inf
 
-    INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/AdapterInformationDxe/AdapterInformationDxe.inf
-    INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/OSConfigDxe/OSConfigDxe.inf
+    #INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/AdapterInformationDxe/AdapterInformationDxe.inf
+    #INF IstariPkg/Device/$(TARGET_DEVICE)/Binaries/QcomPkg/Drivers/OSConfigDxe/OSConfigDxe.inf
 
     INF MdeModulePkg/Universal/Console/ConPlatformDxe/ConPlatformDxe.inf
     INF MdeModulePkg/Universal/Console/ConSplitterDxe/ConSplitterDxe.inf
