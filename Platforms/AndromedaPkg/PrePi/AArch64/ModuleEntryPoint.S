@@ -67,20 +67,6 @@ _SetupPrimaryCoreStack:
 
   /* Zero Init stack */
   add x2, x0, x1         /* End of Stack */
-  mov x3, x0             /* Stack Base */
-
-  mov v4.d[0], xzr
-  mov v4.d[1], xzr
-  mov v5.2d, v4.2d
-  mov v6.2d, v4.2d
-  mov v7.2d, v4.2d
-
-_ClearStack:
-  /* Assumes StackBase is 128-bit aligned, StackSize is a multiple of 64B */
-  st4   {v4.2d, v5.2d, v6.2d, v7.2d}, [x3], #64  /* Fill every 64 bytes */
-  cmp   x3, x2                                   /* Compare Size */
-  b.lt  _ClearStack
-
   add sp, x2, xzr                                /* Initalize SP */
 
 _EnableCache:

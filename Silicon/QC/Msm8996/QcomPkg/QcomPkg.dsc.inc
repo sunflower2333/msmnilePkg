@@ -10,7 +10,8 @@
 ##
 
 [BuildOptions.common]
-  *_*_*_CC_FLAGS = -march=armv8-a+crypto+rcpc 
+  *_*_*_CC_FLAGS = -mfix-cortex-a53-835769
+  *_*_AARCH64_DLINK_FLAGS = -z common-page-size=0x10000
 
 [PcdsFixedAtBuild.common]
   gArmTokenSpaceGuid.PcdSystemMemoryBase|0x80000000         # Starting address, 2GB Base
