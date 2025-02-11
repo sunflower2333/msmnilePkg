@@ -65,6 +65,13 @@ VOID MemoryTest(VOID)
       SerialPortWrite((UINT8 *)Buffer, CharCount);
 
       for (UINT64 i = 0; i < MemoryDescriptorEx->Length; i += sizeof(UINT64)) {
+        if (i % 0x100000 == 0) {
+          CharCount = AsciiSPrint(
+              Buffer, sizeof(Buffer), "\rTesting addr: %p",
+              MemoryDescriptorEx->Address + i);
+          SerialPortWrite((UINT8 *)Buffer, CharCount);
+        }
+        
         /*CharCount = AsciiSPrint(
             Buffer, sizeof(Buffer), "\rTesting addr: %p",
             MemoryDescriptorEx->Address + i);
