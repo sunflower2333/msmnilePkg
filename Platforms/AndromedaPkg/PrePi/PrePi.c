@@ -54,6 +54,7 @@ VOID MemoryTest(VOID)
          MemoryDescriptorEx->MemoryType == BsData ||
          MemoryDescriptorEx->MemoryType == RtData) &&
         AsciiStriCmp("DBI Dump", MemoryDescriptorEx->Name) != 0 &&
+        AsciiStriCmp("DXE Heap", MemoryDescriptorEx->Name) != 0 &&
         AsciiStriCmp("UEFI FD", MemoryDescriptorEx->Name) != 0 &&
         AsciiStriCmp("UEFI Mem Pool", MemoryDescriptorEx->Name) != 0 &&
         AsciiStriCmp("CPU Vectors", MemoryDescriptorEx->Name) != 0 &&
@@ -71,7 +72,7 @@ VOID MemoryTest(VOID)
               MemoryDescriptorEx->Address + i);
           SerialPortWrite((UINT8 *)Buffer, CharCount);
         }
-        
+
         /*CharCount = AsciiSPrint(
             Buffer, sizeof(Buffer), "\rTesting addr: %p",
             MemoryDescriptorEx->Address + i);
@@ -79,6 +80,11 @@ VOID MemoryTest(VOID)
 
         MmioWrite64(MemoryDescriptorEx->Address + i, 0);
       }
+
+      CharCount = AsciiSPrint(
+          Buffer, sizeof(Buffer), "\rTesting addr: %p",
+          MemoryDescriptorEx->Address + MemoryDescriptorEx->Length);
+      SerialPortWrite((UINT8 *)Buffer, CharCount);
 
       CharCount = AsciiSPrint(
           Buffer, sizeof(Buffer), "\n\rTesting %a is finished.\n\r",
