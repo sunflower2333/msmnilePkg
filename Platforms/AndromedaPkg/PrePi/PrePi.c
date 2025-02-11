@@ -33,6 +33,60 @@
 UINT64  mSystemMemoryEnd = FixedPcdGet64 (PcdSystemMemoryBase) +
                            FixedPcdGet64 (PcdSystemMemorySize) - 1;
 
+VOID MemoryTest(VOID)
+{
+  CHAR8 Buffer[100];
+  UINTN CharCount;
+
+  // RAM Sanity testing begins here.
+  PARM_MEMORY_REGION_DESCRIPTOR_EX MemoryDescriptorEx = GetPlatformMemoryMap();
+
+  CharCount =
+      AsciiSPrint(Buffer, sizeof(Buffer), "Testing RAM. Please wait.\n\r");
+  SerialPortWrite((UINT8 *)Buffer, CharCount);
+
+  // Run through each memory descriptor
+  while (MemoryDescriptorEx->Length != 0) {
+    if (MemoryDescriptorEx->HobOption == AddMem &&
+        MemoryDescriptorEx->ResourceType == SYS_MEM &&
+        MemoryDescriptorEx->ResourceAttribute == (SYS_MEM_CAP) &&
+        (MemoryDescriptorEx->MemoryType == Conv ||
+         MemoryDescriptorEx->MemoryType == BsData ||
+         MemoryDescriptorEx->MemoryType == RtData) &&
+        AsciiStriCmp("DBI Dump", MemoryDescriptorEx->Name) != 0 &&
+        AsciiStriCmp("UEFI FD", MemoryDescriptorEx->Name) != 0 &&
+        AsciiStriCmp("UEFI Mem Pool", MemoryDescriptorEx->Name) != 0 &&
+        AsciiStriCmp("CPU Vectors", MemoryDescriptorEx->Name) != 0 &&
+        AsciiStriCmp("UEFI Stack", MemoryDescriptorEx->Name) != 0) {
+
+      CharCount = AsciiSPrint(
+          Buffer, sizeof(Buffer), "Testing %a. Please wait.\n\r",
+          MemoryDescriptorEx->Name);
+      SerialPortWrite((UINT8 *)Buffer, CharCount);
+
+      for (UINT64 i = 0; i < MemoryDescriptorEx->Length; i += sizeof(UINT64)) {
+        CharCount = AsciiSPrint(
+            Buffer, sizeof(Buffer), "\rTesting addr: %p",
+            MemoryDescriptorEx->Address + i);
+
+        MmioWrite64(MemoryDescriptorEx->Address + i, 0);
+
+        SerialPortWrite((UINT8 *)Buffer, CharCount);
+      }
+
+      CharCount = AsciiSPrint(
+          Buffer, sizeof(Buffer), "\n\rTesting %a is finished.\n\r",
+          MemoryDescriptorEx->Name);
+      SerialPortWrite((UINT8 *)Buffer, CharCount);
+    }
+    MemoryDescriptorEx++;
+  }
+
+  CharCount =
+      AsciiSPrint(Buffer, sizeof(Buffer), "Testing RAM is finished.\n\r");
+  SerialPortWrite((UINT8 *)Buffer, CharCount);
+}
+
 EFI_STATUS
 GetPlatformPpi (
   IN  EFI_GUID  *PpiGuid,
@@ -141,6 +195,8 @@ PrePiMain (
   // Initialize MMU and Memory HOBs (Resource Descriptor HOBs)
   Status = MemoryPeim (UefiMemoryBase, UefiMemorySize);
   ASSERT_EFI_ERROR (Status);
+
+  MemoryTest();
 
   BuildStackHob (StacksBase, StacksSize);
 
