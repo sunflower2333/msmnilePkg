@@ -9,9 +9,9 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"DBI Dump",          0x80010000, 0x00014000, NoHob,  MMAP_IO, INITIALIZED, Conv,   NS_DEVICE},
     {"RAM Partition",     0x80024000, 0x000DC000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
     {"HLOS 1",            0x80100000, 0x00100000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
-    {"RAM Partition",     0x80200000, 0x00180000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
     /* Removed due to crash issues, overlapped code issues (LK boot related?)
     {"UEFI FD",           0x80200000, 0x00180000, AddMem, SYS_MEM, SYS_MEM_CAP, BsCode, WRITE_BACK}, */
+    {"RAM Partition",     0x80200000, 0x00180000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
     {"FBPT Payload",      0x80380000, 0x00001000, AddMem, SYS_MEM, SYS_MEM_CAP, RtData, UNCACHED_UNBUFFERED},
     /* Changed following MSM8994 platform setup changes, original value below:
     {"DBG2",              0x80381000, 0x00004000, AddMem, SYS_MEM, SYS_MEM_CAP, LdData, UNCACHED_UNBUFFERED},*/
@@ -50,8 +50,8 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"HLOS 4",            0x91B00000, 0x0E500000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
     {"HLOS 5",            0xA0000000, 0xFFFFFFFFFFFFFFFF, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK}, */
     /* Moved due to crash issues, overlapped code issues (LK boot related?) */
-    {"DXE Heap",          0x91B00000, 0x0C500000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
-    /* Something blocking between 0x9E000000 and 0xA0000000 (Size: 0x02000000) */
+    {"DXE Heap",          0x91B00000, 0x03C00000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
+    /* Something blocking between 0x95700000 and 0xA0000000 (Size: 0x0A900000) */
     {"UEFI FD",           0xA0000000, 0x00300000, AddMem, SYS_MEM, SYS_MEM_CAP, BsCode, WRITE_BACK},
 
     /* RAM partition regions */
@@ -59,7 +59,7 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     /* DDR Bank 0 End */
     /* Carveout Region (0xFFE00000 -> 0x100000000, Size 0x00200000) */
     /* DDR Bank 1 Start */
-    {"RAM Partition",    0x100000000, 0x7E450000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
+    //{"RAM Partition",    0x100000000, 0x7E450000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
     /* DDR Bank 1 End */
 
     /* Other memory regions */

@@ -86,7 +86,6 @@ GCC:*_*_AARCH64_CC_FLAGS = -DSILICON_PLATFORM=8996
   AndromedaPkg/Driver/GpioButtons/GpioButtons.inf
 
   # Auto Memory Adder
-  AndromedaPkg/Driver/RamPartitionDxe/RamPartitionDxe.inf
 
 # Device Specific Drivers
 !include IstariPkg/Device/$(TARGET_DEVICE)/DXE.dsc.inc

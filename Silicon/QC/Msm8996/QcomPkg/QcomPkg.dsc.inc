@@ -58,6 +58,3 @@
   ConsoleMsgLib|PcBdsPkg/Library/ConsoleMsgLibNull/ConsoleMsgLibNull.inf
   
   ArmPlatformLib|AndromedaPkg/Library/ArmPlatformLib/ArmPlatformLib.inf
-
-[Components.common]
- AndromedaPkg/Driver/RamPartitionDxe/RamPartitionDxe.inf
