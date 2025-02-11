@@ -50,6 +50,7 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"HLOS 4",            0x91B00000, 0x0E500000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
     {"HLOS 5",            0xA0000000, 0xFFFFFFFFFFFFFFFF, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK}, */
     /* Moved due to crash issues, overlapped code issues (LK boot related?) */
+    {"RAM Partition",     0x91B00000, 0x0E500000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
     {"DXE Heap",          0xC0000000, 0x0E500000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
     {"UEFI FD",           0xA0000000, 0x00300000, AddMem, SYS_MEM, SYS_MEM_CAP, BsCode, WRITE_BACK},
 
