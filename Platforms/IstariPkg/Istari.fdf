@@ -88,6 +88,7 @@ READ_LOCK_STATUS   = TRUE
   INF EmbeddedPkg/Drivers/VirtualKeyboardDxe/VirtualKeyboardDxe.inf
 
   # BDS
+  INF AndromedaPkg/Driver/HeartbeatDxe/HeartbeatDxe.inf
   INF MdeModulePkg/Universal/SmbiosDxe/SmbiosDxe.inf
   INF MdeModulePkg/Universal/SetupBrowserDxe/SetupBrowserDxe.inf
   INF MdeModulePkg/Universal/DriverHealthManagerDxe/DriverHealthManagerDxe.inf

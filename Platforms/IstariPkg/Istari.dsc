@@ -85,6 +85,8 @@ GCC:*_*_AARCH64_CC_FLAGS = -DSILICON_PLATFORM=8996
   !endif
   AndromedaPkg/Driver/GpioButtons/GpioButtons.inf
 
+  AndromedaPkg/Driver/HeartbeatDxe/HeartbeatDxe.inf
+
 # Device Specific Drivers
 !include IstariPkg/Device/$(TARGET_DEVICE)/DXE.dsc.inc
 
