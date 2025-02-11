@@ -33,7 +33,7 @@
 UINT64  mSystemMemoryEnd = FixedPcdGet64 (PcdSystemMemoryBase) +
                            FixedPcdGet64 (PcdSystemMemorySize) - 1;
 
-VOID MemoryTest(VOID)
+/*VOID MemoryTest(VOID)
 {
   CHAR8 Buffer[100];
   UINTN CharCount;
@@ -76,7 +76,7 @@ VOID MemoryTest(VOID)
         /*CharCount = AsciiSPrint(
             Buffer, sizeof(Buffer), "\rTesting addr: %p",
             MemoryDescriptorEx->Address + i);
-        SerialPortWrite((UINT8 *)Buffer, CharCount);*/
+        SerialPortWrite((UINT8 *)Buffer, CharCount);*
 
         MmioWrite64(MemoryDescriptorEx->Address + i, 0);
       }
@@ -97,7 +97,7 @@ VOID MemoryTest(VOID)
   CharCount =
       AsciiSPrint(Buffer, sizeof(Buffer), "Testing RAM is finished.\n\r");
   SerialPortWrite((UINT8 *)Buffer, CharCount);
-}
+}*/
 
 EFI_STATUS
 GetPlatformPpi (
@@ -208,7 +208,7 @@ PrePiMain (
   Status = MemoryPeim (UefiMemoryBase, UefiMemorySize);
   ASSERT_EFI_ERROR (Status);
 
-  MemoryTest();
+  //MemoryTest();
 
   BuildStackHob (StacksBase, StacksSize);
 
