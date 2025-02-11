@@ -8,35 +8,35 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     /* DDR Bank 0 Start */
     {"DBI Dump",          0x80010000, 0x00014000, NoHob,  MMAP_IO, INITIALIZED, Conv,   NS_DEVICE},
     //{"RAM Partition",     0x80024000, 0x000DC000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
-    {"HLOS 1",            0x80100000, 0x00100000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
+    //{"HLOS 1",            0x80100000, 0x00100000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
     /* Removed due to crash issues, overlapped code issues (LK boot related?)
     {"UEFI FD",           0x80200000, 0x00180000, AddMem, SYS_MEM, SYS_MEM_CAP, BsCode, WRITE_BACK}, */
-    {"RAM Partition",     0x80200000, 0x00180000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
-    {"FBPT Payload",      0x80380000, 0x00001000, AddMem, SYS_MEM, SYS_MEM_CAP, RtData, UNCACHED_UNBUFFERED},
+    //{"RAM Partition",     0x80200000, 0x00180000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
+    //{"FBPT Payload",      0x80380000, 0x00001000, AddMem, SYS_MEM, SYS_MEM_CAP, RtData, UNCACHED_UNBUFFERED},
     /* Changed following MSM8994 platform setup changes, original value below:
     {"DBG2",              0x80381000, 0x00004000, AddMem, SYS_MEM, SYS_MEM_CAP, LdData, UNCACHED_UNBUFFERED},*/
-    {"DBG2",              0x80381000, 0x00004000, AddMem, SYS_MEM, SYS_MEM_CAP, RtData, UNCACHED_UNBUFFERED},
-    {"Capsule Header",    0x80385000, 0x00001000, AddMem, SYS_MEM, SYS_MEM_CAP, RtData, UNCACHED_UNBUFFERED},
-    {"TPM Control Area",  0x80386000, 0x00003000, AddMem, SYS_MEM, SYS_MEM_CAP, RtData, UNCACHED_UNBUFFERED},
-    {"UEFI Info Block",   0x80389000, 0x00001000, AddMem, SYS_MEM, SYS_MEM_CAP, RtData, UNCACHED_UNBUFFERED},
-    {"Reset Data",        0x8038A000, 0x00004000, AddMem, SYS_MEM, SYS_MEM_CAP, RtData, UNCACHED_UNBUFFERED},
+    //{"DBG2",              0x80381000, 0x00004000, AddMem, SYS_MEM, SYS_MEM_CAP, RtData, UNCACHED_UNBUFFERED},
+    //{"Capsule Header",    0x80385000, 0x00001000, AddMem, SYS_MEM, SYS_MEM_CAP, RtData, UNCACHED_UNBUFFERED},
+    //{"TPM Control Area",  0x80386000, 0x00003000, AddMem, SYS_MEM, SYS_MEM_CAP, RtData, UNCACHED_UNBUFFERED},
+    //{"UEFI Info Block",   0x80389000, 0x00001000, AddMem, SYS_MEM, SYS_MEM_CAP, RtData, UNCACHED_UNBUFFERED},
+    //{"Reset Data",        0x8038A000, 0x00004000, AddMem, SYS_MEM, SYS_MEM_CAP, RtData, UNCACHED_UNBUFFERED},
     /* Changed following MSM8994 platform setup changes, original value below:
     {"Reser. Uncached 0", 0x8038E000, 0x00072000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, UNCACHED_UNBUFFERED}, */
     {"Reser. Uncached 0", 0x8038E000, 0x00002000, AddMem, SYS_MEM, SYS_MEM_CAP, RtData, UNCACHED_UNBUFFERED}, /* It's tricky tricky tricky */
-    {"Reser. Uncached 0", 0x80390000, 0x00070000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, UNCACHED_UNBUFFERED}, /* There goes the other part */
+    //{"Reser. Uncached 0", 0x80390000, 0x00070000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, UNCACHED_UNBUFFERED}, /* There goes the other part */
     /* Original value from uefiplat.cfg
     {"Display Reserved",  0x80400000, 0x00800000, AddMem, MEM_RES, WRITE_THROUGH, MaxMem, WRITE_THROUGH}, */
     //{"RAM Partition",     0x80400000, 0x00800000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
     {"UEFI Stack",        0x80C00000, 0x00040000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
     {"CPU Vectors",       0x80C40000, 0x00010000, AddMem, SYS_MEM, SYS_MEM_CAP, BsCode, WRITE_BACK},
-    {"Reserved Cached 0", 0x80C50000, 0x000B0000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
+    //{"Reserved Cached 0", 0x80C50000, 0x000B0000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
     /* Conflict with new Display Reserved
     {"HLOS 2",            0x80D00000, 0x03300000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK}, */
-    {"HLOS 2",            0x80D00000, 0x02701000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
+    //{"HLOS 2",            0x80D00000, 0x02701000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
     /* Adjusted value from LK framebuffer setup, ideally we would want to move this using MDP5 registers */
     {"Display Reserved",  0x83401000, 0x00800000, AddMem, MEM_RES, WRITE_THROUGH, MaxMem, WRITE_THROUGH},
-    {"RAM Partition",     0x83C01000, 0x003FF000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
-    {"HLOS 3",            0x84000000, 0x01800000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
+    //{"RAM Partition",     0x83C01000, 0x003FF000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
+    //{"HLOS 3",            0x84000000, 0x01800000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
     {"HYP",               0x85800000, 0x00600000, AddMem, SYS_MEM, SYS_MEM_CAP, Reserv, NS_DEVICE},
     {"MPSS_EFS",          0x85E00000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP, Reserv, NS_DEVICE},
     {"SMEM",              0x86000000, 0x00200000, AddMem, MEM_RES, UNCACHEABLE, Reserv, UNCACHED_UNBUFFERED},
@@ -50,7 +50,7 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"HLOS 4",            0x91B00000, 0x0E500000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
     {"HLOS 5",            0xA0000000, 0xFFFFFFFFFFFFFFFF, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK}, */
     /* Moved due to crash issues, overlapped code issues (LK boot related?) */
-    {"DXE Heap",          0x91B00000, 0x0E500000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
+    {"DXE Heap",          0xC0000000, 0x0E500000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
     {"UEFI FD",           0xA0000000, 0x00300000, AddMem, SYS_MEM, SYS_MEM_CAP, BsCode, WRITE_BACK},
 
     /* RAM partition regions */
