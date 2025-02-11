@@ -73,10 +73,10 @@ UINT64  mSystemMemoryEnd = FixedPcdGet64 (PcdSystemMemoryBase) +
           SerialPortWrite((UINT8 *)Buffer, CharCount);
         }
 
-        /*CharCount = AsciiSPrint(
+        CharCount = AsciiSPrint(
             Buffer, sizeof(Buffer), "\rTesting addr: %p",
             MemoryDescriptorEx->Address + i);
-        SerialPortWrite((UINT8 *)Buffer, CharCount);*
+        SerialPortWrite((UINT8 *)Buffer, CharCount);
 
         MmioWrite64(MemoryDescriptorEx->Address + i, 0);
       }
