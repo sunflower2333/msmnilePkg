@@ -32,11 +32,11 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"Reserved Cached 0", 0x80C50000, 0x000B0000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
     /* Conflict with new Display Reserved
     {"HLOS 2",            0x80D00000, 0x03300000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK}, */
-    {"HLOS 2",            0x80D00000, 0x02701000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
+    {"HLOS 2",            0x80D00000, 0x02700000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
+    {"DFPS DATA MEM",     0x83400000, 0x00001000, AddMem, SYS_MEM, SYS_MEM_CAP, Reserv, NS_DEVICE},
     /* Adjusted value from LK framebuffer setup, ideally we would want to move this using MDP5 registers */
     {"Display Reserved",  0x83401000, 0x00800000, AddMem, MEM_RES, WRITE_THROUGH, MaxMem, WRITE_THROUGH},
-    {"RAM Partition",     0x83C01000, 0x003FF000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
-    {"HLOS 3",            0x84000000, 0x01800000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
+    {"DSI Cont Splash",   0x83C01000, 0x01BFF000, AddMem, SYS_MEM, SYS_MEM_CAP, Reserv, NS_DEVICE},
     {"HYP",               0x85800000, 0x00600000, AddMem, SYS_MEM, SYS_MEM_CAP, Reserv, NS_DEVICE},
     {"MPSS_EFS",          0x85E00000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP, Reserv, NS_DEVICE},
     {"SMEM",              0x86000000, 0x00200000, AddMem, MEM_RES, UNCACHEABLE, Reserv, UNCACHED_UNBUFFERED},
@@ -54,7 +54,9 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"UEFI FD",           0xA0000000, 0x00300000, AddMem, SYS_MEM, SYS_MEM_CAP, BsCode, WRITE_BACK},
 
     /* RAM partition regions */
-    {"RAM Partition",     0xA0300000, 0x5FB00000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
+    {"RAM Partition",     0xA0300000, 0x11900000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
+    {"HDMI Cont Splash",  0xB1C00000, 0x023FF000, AddMem, SYS_MEM, SYS_MEM_CAP, Reserv, NS_DEVICE},
+    {"RAM Partition",     0xB3FFF000, 0x4BE01000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
     /* DDR Bank 0 End */
     /* Carveout Region (0xFFE00000 -> 0x100000000, Size 0x00200000) */
     /* DDR Bank 1 Start */
