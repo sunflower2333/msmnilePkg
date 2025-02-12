@@ -45,7 +45,7 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     /* DDR Bank 0 End */
     /* Carveout Region (0xFFE00000 -> 0x100000000, Size 0x00200000) */
     /* DDR Bank 1 Start */
-    {"RAM Partition",    0x100000000, 0x7E450000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
+    //{"RAM Partition",    0x100000000, 0x7E450000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
     /* DDR Bank 1 End */
 
     /* Other memory regions */
