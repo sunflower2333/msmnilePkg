@@ -1,7 +1,7 @@
 FILE FREEFORM = 7E374E25-8E01-4FEE-87F2-390C23C606CD {
     SECTION RAW = IstariPkg/ACPI/APIC.aml
-    SECTION RAW = IstariPkg/ACPI/BGRT.aml
-    SECTION RAW = IstariPkg/ACPI/CSRT.aml
+    #SECTION RAW = IstariPkg/ACPI/BGRT.aml
+    #SECTION RAW = IstariPkg/ACPI/CSRT.aml
     SECTION RAW = IstariPkg/ACPI/DBG2.aml
 #   SECTION RAW = IstariPkg/ACPI/DSDT.aml
     SECTION RAW = IstariPkg/Device/$(TARGET_DEVICE)/ACPI/DSDT.aml
