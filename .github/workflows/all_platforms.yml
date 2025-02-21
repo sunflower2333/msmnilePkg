@@ -91,6 +91,11 @@ jobs:
               chipname: "sm7150"
             },
             {
+              platform: "WarlockPkg",
+              codename: "warlock",
+              chipname: "sdm670"
+            },
+            {
               platform: "NapaliPkg",
               codename: "napali",
               chipname: "sdm845"

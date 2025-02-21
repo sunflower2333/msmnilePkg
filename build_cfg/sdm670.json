@@ -1,0 +1,8 @@
+{
+    "platform": "Sdm670",
+    "package" : "WarlockPkg",
+    "bootshim": {
+        "UEFI_BASE": "0x9FC00000",
+        "UEFI_SIZE": "0x00300000"
+    }
+}
