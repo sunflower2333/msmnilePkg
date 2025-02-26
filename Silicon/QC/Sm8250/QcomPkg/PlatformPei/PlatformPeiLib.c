@@ -13,7 +13,7 @@
 #include <Library/HobLib.h>
 #include <Library/MemoryAllocationLib.h>
 #include <Library/PcdLib.h>
-#include <Library/SecProtocolFinderLib.h>
+//#include <Library/SecProtocolFinderLib.h>
 #include "PlatformPeiLibInternal.h"
 
 STATIC
@@ -150,7 +150,7 @@ VOID InstallPlatformHob()
     UINTN FvDecompressAddress = 0x9FC403D0;
     BOOLEAN gProdmodeInfo     = FALSE;
 
-    InitProtocolFinder(&SchedIntfAddress, NULL);
+    //InitProtocolFinder(&SchedIntfAddress, NULL);
 
     BuildMemHobForFv(EFI_HOB_TYPE_FV2);
     BuildGuidDataHob(
