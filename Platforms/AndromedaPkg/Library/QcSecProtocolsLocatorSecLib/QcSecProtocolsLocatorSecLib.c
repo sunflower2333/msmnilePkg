@@ -100,12 +100,12 @@ exit:
  * @retval status
  **/
 EFI_STATUS
-find_guid_in_buffer(TE_INFO_STRUCT *TEInfo, GUID *KeyGuid, UINTN *GuidInBuffer)
+find_guid_in_buffer(TE_INFO_STRUCT *TEInfo, GUID *KeyGuid, UINT32 *GuidInBuffer)
 {
   for (UINTN i = 0; i <= TEInfo->teSize - 16; i++) {
 
     if (CompareMem(TEInfo->programBuffer + i, KeyGuid, 16) == 0) {
-      *GuidInBuffer = i;
+      *GuidInBuffer = (UINT32)i;
       return EFI_SUCCESS;
     }
   }
@@ -205,8 +205,9 @@ EFI_STATUS find_protocol_xbldt(
     TE_INFO_STRUCT *Binary, GUID *KeyGuid, UINT64 *TargetAddress)
 {
   // Find Guid Offset
-  UINT32 guid_offset = find_guid_in_buffer(Binary, KeyGuid);
-  if (guid_offset == -1) {
+  UINT32 guid_offset = 0;
+  EFI_STATUS status = find_guid_in_buffer(Binary, KeyGuid, &guid_offset);
+  if (EFI_ERROR(status)) {
     DEBUG((DEBUG_WARN, "XBLDT guid not found in buffer\n"));
     return EFI_NOT_FOUND;
   }
@@ -288,9 +289,9 @@ VOID InitProtocolFinder(
   if (NULL != ScheAddr) {
     status =
         find_protocol_scheduler(&CoreTE, &gEfiSchedIntfGuid, &ScheIntrAddr);
-    ASSERT(EFI_SUCCESS(status));
+    ASSERT(!EFI_ERROR(status));
 
-    if (EFI_SUCCESS(status)) {
+    if (!EFI_ERROR(status)) {
       // Fill caller's address
       *ScheAddr = ScheIntrAddr;
     }
@@ -299,9 +300,9 @@ VOID InitProtocolFinder(
   // Find XBLDT address
   if (NULL != XBLDTOpsAddr) {
     status = find_protocol_xbldt(&CoreTE, &gEfiSecDtbGuid, &SecDTOpsAddr);
-    ASSERT(EFI_SUCCESS(status));
+    ASSERT(!EFI_ERROR(status));
 
-    if (EFI_SUCCESS(status)) {
+    if (!EFI_ERROR(status)) {
       // Fill caller's address
       *XBLDTOpsAddr = SecDTOpsAddr;
     }
