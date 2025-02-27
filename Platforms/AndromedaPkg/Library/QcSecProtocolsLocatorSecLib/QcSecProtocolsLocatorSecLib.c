@@ -20,35 +20,51 @@ EFI_STATUS FindTeAddr(TE_INFO_STRUCT *TEInfo)
   // Get Previous UEFI FD Address
   Status = LocateMemoryMapAreaByName("FD Reserved I", &PreFD);
   if (EFI_ERROR(Status)) {
-    DEBUG((DEBUG_ERROR, "Failed to locate \"FD Reserved I\", search \"UEFI FD\" instead.\n"));
+    DEBUG(
+        (DEBUG_ERROR,
+         "Failed to locate \"FD Reserved I\", search \"UEFI FD\" instead.\n"));
+
     Status = LocateMemoryMapAreaByName("UEFI FD", &PreFD);
     if (EFI_ERROR(Status)) {
       DEBUG((DEBUG_ERROR, "Failed to find \"UEFI FD\"\n"));
-      return Status;
+      Status = EFI_NOT_FOUND;
+      goto exit;
     }
   }
 
   // Find Signature 0x565A 'VZ' And Arch 0x64AA 'd'
   PreFD.Address += 0x1000; // Add 0x1000 here to skip useless data
-  for (UINT64 i = 0; i < PreFD.Length; i += 4) {
-    if (*(UINT32 *)(PreFD.Address + i) == 0xAA645A56) {
-      // Store Address
-      TEInfo->TEBuffer = (VOID *)(i + PreFD.Address);
-      break;
+
+  UINT64 MaxAddressForFDRegion = (UINT64)PreFD.Address + PreFD.Length;
+
+  for (UINT64 SecurityCoreAddress = (UINT64)PreFD.Address;
+       SecurityCoreAddress < MaxAddressForFDRegion; SecurityCoreAddress += 4) {
+    if (*(UINT32 *)(SecurityCoreAddress) == 0xAA645A56) {
+      // Reach end of header
+      UINT64 EndOfHeaderAddress =
+          SecurityCoreAddress + sizeof(EFI_TE_IMAGE_HEADER) +
+          EFI_IMAGE_SIZEOF_SECTION_HEADER *
+              ((EFI_TE_IMAGE_HEADER *)SecurityCoreAddress)->NumberOfSections;
+
+      for (UINT64 ProgramBufferAddress = EndOfHeaderAddress;
+           ProgramBufferAddress < MaxAddressForFDRegion;
+           ProgramBufferAddress += 4) {
+        if (*(UINT32 *)ProgramBufferAddress != 0x0) {
+          // Store Address
+          TEInfo->TEBuffer      = (VOID *)SecurityCoreAddress;
+          TEInfo->programBuffer = (VOID *)ProgramBufferAddress;
+          goto exitLoop;
+        }
+      }
     }
   }
 
-  if (TEInfo->TEBuffer == 0)
+exitLoop:
+  if (TEInfo->TEBuffer == 0) {
     DEBUG((DEBUG_ERROR, "XBLCore.te not found\n"));
-
-  // Reach end of header
-  TEInfo->programBuffer =
-      TEInfo->TEBuffer + sizeof(EFI_TE_IMAGE_HEADER) +
-      EFI_IMAGE_SIZEOF_SECTION_HEADER * TEInfo->teHeader->NumberOfSections;
-
-  // Jump over ALIGN
-  while (*(UINT32 *)TEInfo->programBuffer == 0x0)
-    TEInfo->programBuffer += 4;
+    Status = EFI_NOT_FOUND;
+    goto exit;
+  }
 
 // Print Header information
 #if 0
@@ -72,23 +88,28 @@ EFI_STATUS FindTeAddr(TE_INFO_STRUCT *TEInfo)
        TEInfo->teHeader->BaseOfCode, TEInfo->teHeader->ImageBase,
        TEInfo->programBuffer - TEInfo->TEBuffer));
 #endif
+
+exit:
   return Status;
 }
 
 /**
  * @param TEInfo TE information struct.
  * @param KeyGuid is the buffer need to find in buffer.
- * @retval offset of guid in buffer.
+ * @param GuidInBuffer offset of guid in buffer.
+ * @retval status
  **/
-UINTN find_guid_in_buffer(TE_INFO_STRUCT *TEInfo, GUID *KeyGuid)
+EFI_STATUS
+find_guid_in_buffer(TE_INFO_STRUCT *TEInfo, GUID *KeyGuid, UINTN *GuidInBuffer)
 {
   for (UINTN i = 0; i <= TEInfo->teSize - 16; i++) {
 
     if (CompareMem(TEInfo->programBuffer + i, KeyGuid, 16) == 0) {
-      return i;
+      *GuidInBuffer = i;
+      return EFI_SUCCESS;
     }
   }
-  return -EFI_NOT_FOUND; // Not found
+  return EFI_NOT_FOUND; // Not found
 }
 
 BOOLEAN validate_adrp(INST *inst)
@@ -125,13 +146,15 @@ VOID parse_adrp(INST *inst, UINT32 offset)
   inst->adrp.RdAfterExecution = ((inst->adrp.pc >> 12) << 12) + inst->adrp.imm;
 };
 
-UINT64 find_protocol_scheduler(TE_INFO_STRUCT *Binary, GUID *KeyGuid)
+EFI_STATUS find_protocol_scheduler(
+    TE_INFO_STRUCT *Binary, GUID *KeyGuid, UINT64 *TargetAddress)
 {
   // Find Guid Offset
-  UINT32 guid_offset = find_guid_in_buffer(Binary, KeyGuid);
-  if (guid_offset < 0) {
+  UINT32     guid_offset = 0;
+  EFI_STATUS status      = find_guid_in_buffer(Binary, KeyGuid, &guid_offset);
+  if (EFI_ERROR(status)) {
     DEBUG((DEBUG_WARN, "Schduler guid not found in buffer\n"));
-    return -EFI_NOT_FOUND;
+    return EFI_NOT_FOUND;
   }
 
   // Find all ADRP function
@@ -163,25 +186,29 @@ UINT64 find_protocol_scheduler(TE_INFO_STRUCT *Binary, GUID *KeyGuid)
             INST nInst = {.val = *(UINT32 *)(Binary->TEBuffer + offset + 4)};
             if (validate_add(&nInst)) {
               // Get target address
-              return bInst.adrp.RdAfterExecution + nInst.add.imm12 +
-                     Binary->teHeader->BaseOfCode + Binary->teHeader->ImageBase;
+              *TargetAddress = bInst.adrp.RdAfterExecution + nInst.add.imm12 +
+                               Binary->teHeader->BaseOfCode +
+                               Binary->teHeader->ImageBase;
+              return EFI_SUCCESS;
             }
           }
         }
       }
     }
   }
+
   DEBUG((DEBUG_WARN, "Scheduler Protocol Address not found\n"));
-  return -EFI_NOT_FOUND;
+  return EFI_NOT_FOUND;
 }
 
-UINT64 find_protocol_xbldt(TE_INFO_STRUCT *Binary, GUID *KeyGuid)
+EFI_STATUS find_protocol_xbldt(
+    TE_INFO_STRUCT *Binary, GUID *KeyGuid, UINT64 *TargetAddress)
 {
   // Find Guid Offset
   UINT32 guid_offset = find_guid_in_buffer(Binary, KeyGuid);
   if (guid_offset == -1) {
     DEBUG((DEBUG_WARN, "XBLDT guid not found in buffer\n"));
-    return -EFI_NOT_FOUND;
+    return EFI_NOT_FOUND;
   }
 
   // Find all ADRP function
@@ -213,16 +240,19 @@ UINT64 find_protocol_xbldt(TE_INFO_STRUCT *Binary, GUID *KeyGuid)
             INST bbInst = {.val = *(UINT32 *)(Binary->TEBuffer + offset - 8)};
             if (validate_add(&bbInst)) {
               // Get target address
-              return bbbInst.adrp.RdAfterExecution + bbInst.add.imm12 +
-                     Binary->teHeader->BaseOfCode + Binary->teHeader->ImageBase;
+              *TargetAddress = bbbInst.adrp.RdAfterExecution +
+                               bbInst.add.imm12 + Binary->teHeader->BaseOfCode +
+                               Binary->teHeader->ImageBase;
+              return EFI_SUCCESS;
             }
           }
         }
       }
     }
   }
+
   DEBUG((DEBUG_WARN, "XBLDT Protocol Address not found\n"));
-  return -EFI_NOT_FOUND;
+  return EFI_NOT_FOUND;
 }
 
 // Declare TE info struct
@@ -232,36 +262,48 @@ STATIC UINTN SecDTOpsAddr = 0;
 VOID InitProtocolFinder(
     IN EFI_PHYSICAL_ADDRESS *ScheAddr, IN EFI_PHYSICAL_ADDRESS *XBLDTOpsAddr)
 {
+  EFI_STATUS status = EFI_SUCCESS;
+
   // Do search only once
   if (ScheIntrAddr != 0 || SecDTOpsAddr != 0) {
-    if (NULL != ScheAddr)
+    if (NULL != ScheAddr) {
       *ScheAddr = ScheIntrAddr;
-    if (NULL != XBLDTOpsAddr)
+    }
+
+    if (NULL != XBLDTOpsAddr) {
       *XBLDTOpsAddr = SecDTOpsAddr;
+    }
     return;
   }
 
   TE_INFO_STRUCT CoreTE = {0};
 
   // Find and fill TE info in memory
-  if(EFI_ERROR(FindTeAddr(&CoreTE))){
+  if (EFI_ERROR(FindTeAddr(&CoreTE))) {
     DEBUG((DEBUG_ERROR, "Failed to find TE address\n"));
     return;
   };
 
   // Find Scheduler address
   if (NULL != ScheAddr) {
-    ScheIntrAddr = find_protocol_scheduler(&CoreTE, &gEfiSchedIntfGuid);
-    ASSERT(ScheIntrAddr > 0);
-    // Fill caller's address
-    *ScheAddr = ScheIntrAddr;
+    status =
+        find_protocol_scheduler(&CoreTE, &gEfiSchedIntfGuid, &ScheIntrAddr);
+    ASSERT(EFI_SUCCESS(status));
+
+    if (EFI_SUCCESS(status)) {
+      // Fill caller's address
+      *ScheAddr = ScheIntrAddr;
+    }
   }
 
   // Find XBLDT address
   if (NULL != XBLDTOpsAddr) {
-    SecDTOpsAddr = find_protocol_xbldt(&CoreTE, &gEfiSecDtbGuid);
-    ASSERT(SecDTOpsAddr > 0);
-    // Fill caller's address
-    *XBLDTOpsAddr = SecDTOpsAddr;
+    status = find_protocol_xbldt(&CoreTE, &gEfiSecDtbGuid, &SecDTOpsAddr);
+    ASSERT(EFI_SUCCESS(status));
+
+    if (EFI_SUCCESS(status)) {
+      // Fill caller's address
+      *XBLDTOpsAddr = SecDTOpsAddr;
+    }
   }
 }
