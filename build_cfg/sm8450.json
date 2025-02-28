@@ -1,0 +1,8 @@
+{
+    "platform": "Sm8450",
+    "package": "WaipioPkg",
+    "bootshim": {
+        "UEFI_BASE": "0xFFC00000",
+        "UEFI_SIZE": "0x00400000"
+    }
+}

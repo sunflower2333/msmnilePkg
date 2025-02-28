@@ -1,0 +1,214 @@
+## @file
+#
+#  Copyright (c) 2018, Linaro Limited. All rights reserved.
+#
+#  SPDX-License-Identifier: BSD-2-Clause-Patent
+#
+##
+
+################################################################################
+#
+# FD Section
+# The [FD] Section is made up of the definition statements and a
+# description of what goes into  the Flash Device Image.  Each FD section
+# defines one flash "device" image.  A flash device image may be one of
+# the following: Removable media bootable image (like a boot floppy
+# image,) an Option ROM image (that would be "flashed" into an add-in
+# card,) a System "Flash"  image (that would be burned into a system's
+# flash) or an Update ("Capsule") image that will be used to update and
+# existing system flash.
+#
+################################################################################
+
+[FD.SM8450_EFI]
+BaseAddress   = 0xFFC00000|gArmTokenSpaceGuid.PcdFdBaseAddress #The base address of the FLASH Device.
+Size          = 0x00400000|gArmTokenSpaceGuid.PcdFdSize        #The size in bytes of the FLASH Device
+ErasePolarity = 1
+BlockSize     = 0x1000
+NumBlocks     = 0x400
+
+################################################################################
+#
+# Following are lists of FD Region layout which correspond to the locations of different
+# images within the flash device.
+#
+# Regions must be defined in ascending order and may not overlap.
+#
+# A Layout Region start with a eight digit hex offset (leading "0x" required) followed by
+# the pipe "|" character, followed by the size of the region, also in hex with the leading
+# "0x" characters. Like:
+# Offset|Size
+# PcdOffsetCName|PcdSizeCName
+# RegionType <FV, DATA, or FILE>
+#
+################################################################################
+0x00000000|0x00400000
+gArmTokenSpaceGuid.PcdFvBaseAddress|gArmTokenSpaceGuid.PcdFvSize
+FV = FVMAIN_COMPACT
+
+################################################################################
+#
+# FV Section
+#
+# [FV] section is used to define what components or modules are placed within a flash
+# device file.  This section also defines order the components and modules are positioned
+# within the image.  The [FV] section consists of define statements, set statements and
+# module statements.
+#
+################################################################################
+
+[FV.FvMain]
+FvNameGuid         = 631008B0-B2D1-410A-8B49-2C5C4D8ECC7E
+BlockSize          = 0x1000
+NumBlocks          = 0        # This FV gets compressed so make it just big enough
+FvAlignment        = 8        # FV alignment and FV attributes setting.
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = TRUE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = TRUE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+
+  !include $(PACKAGE_NAME)/Device/$(TARGET_DEVICE)/APRIORI.inc
+  !include $(PACKAGE_NAME)/Device/$(TARGET_DEVICE)/DXE.inc
+
+  # Debug heartbeat
+!if $(SEND_HEARTBEAT_TO_SERIAL) == 1
+  INF AndromedaPkg/Driver/HeartbeatDxe/HeartbeatDxe.inf
+!endif
+
+  # Secure Boot Key Enroll
+  INF AndromedaPkg/Driver/SecureBootProvisioningDxe/SecureBootProvisioningDxe.inf
+  INF EmbeddedPkg/Drivers/VirtualKeyboardDxe/VirtualKeyboardDxe.inf
+
+  # BDS
+  INF MdeModulePkg/Universal/SmbiosDxe/SmbiosDxe.inf
+  INF MdeModulePkg/Universal/SetupBrowserDxe/SetupBrowserDxe.inf
+  INF MdeModulePkg/Universal/DriverHealthManagerDxe/DriverHealthManagerDxe.inf
+  INF MdeModulePkg/Universal/Console/TerminalDxe/TerminalDxe.inf
+
+  # HID Support
+  INF HidPkg/HidKeyboardDxe/HidKeyboardDxe.inf
+  INF HidPkg/HidMouseAbsolutePointerDxe/HidMouseAbsolutePointerDxe.inf
+  INF HidPkg/UsbKbHidDxe/UsbKbHidDxe.inf
+  INF HidPkg/UsbMouseHidDxe/UsbMouseHidDxe.inf
+
+  # Disk IO
+  INF MdeModulePkg/Bus/Scsi/ScsiBusDxe/ScsiBusDxe.inf
+  INF MdeModulePkg/Bus/Scsi/ScsiDiskDxe/ScsiDiskDxe.inf
+
+  # ACPI and SMBIOS
+  INF MdeModulePkg/Universal/Acpi/AcpiTableDxe/AcpiTableDxe.inf
+  INF MdeModulePkg/Universal/Acpi/AcpiPlatformDxe/AcpiPlatformDxe.inf
+  INF AndromedaPkg/Driver/SmBiosTableDxe/SmBiosTableDxe.inf
+
+  # ACPI Tables
+  !include $(PACKAGE_NAME)/Include/ACPI.inc
+
+  # DT
+  INF EmbeddedPkg/Drivers/DtPlatformDxe/DtPlatformDxe.inf
+  !include $(PACKAGE_NAME)/Include/FDT.inc
+
+  INF MdeModulePkg/Universal/EsrtFmpDxe/EsrtFmpDxe.inf
+
+  !include AndromedaPkg/Frontpage.fdf.inc
+
+  FILE FREEFORM = PCD(gMsCorePkgTokenSpaceGuid.PcdRegulatoryGraphicFileGuid) {
+    SECTION RAW = $(PACKAGE_NAME)/Include/Resources/RegulatoryLogos.png
+  }
+
+  INF AdvLoggerPkg/AdvancedFileLogger/AdvancedFileLogger.inf
+  INF ArmPkg/Drivers/ArmGic/ArmGicDxe.inf
+  INF ArmPkg/Drivers/CpuDxe/CpuDxe.inf
+  INF ArmPkg/Drivers/TimerDxe/TimerDxe.inf
+  INF EmbeddedPkg/MetronomeDxe/MetronomeDxe.inf
+  INF EmbeddedPkg/RealTimeClockRuntimeDxe/RealTimeClockRuntimeDxe.inf
+  INF FatPkg/EnhancedFatDxe/Fat.inf
+  INF MdeModulePkg/Bus/Pci/NvmExpressDxe/NvmExpressDxe.inf
+  INF MdeModulePkg/Bus/Pci/PciBusDxe/PciBusDxe.inf
+#  INF MdeModulePkg/Bus/Usb/UsbMouseAbsolutePointerDxe/UsbMouseAbsolutePointerDxe.inf
+  INF MdeModulePkg/Core/Dxe/DxeMain.inf
+  INF MdeModulePkg/Core/RuntimeDxe/RuntimeDxe.inf
+  INF MdeModulePkg/Universal/Acpi/BootGraphicsResourceTableDxe/BootGraphicsResourceTableDxe.inf
+  INF MdeModulePkg/Universal/Acpi/FirmwarePerformanceDataTableDxe/FirmwarePerformanceDxe.inf
+  INF MdeModulePkg/Universal/BdsDxe/BdsDxe.inf
+  INF MdeModulePkg/Universal/CapsuleRuntimeDxe/CapsuleRuntimeDxe.inf
+  INF MdeModulePkg/Universal/Console/ConPlatformDxe/ConPlatformDxe.inf
+  INF MdeModulePkg/Universal/Console/ConSplitterDxe/ConSplitterDxe.inf
+  INF MdeModulePkg/Universal/Console/GraphicsConsoleDxe/GraphicsConsoleDxe.inf
+  INF MdeModulePkg/Universal/DevicePathDxe/DevicePathDxe.inf
+  INF MdeModulePkg/Universal/Disk/UnicodeCollation/EnglishDxe/EnglishDxe.inf
+  INF MdeModulePkg/Universal/FvSimpleFileSystemDxe/FvSimpleFileSystemDxe.inf
+  INF MdeModulePkg/Universal/HiiDatabaseDxe/HiiDatabaseDxe.inf
+  INF MdeModulePkg/Universal/MemoryTest/NullMemoryTestDxe/NullMemoryTestDxe.inf
+  INF MdeModulePkg/Universal/PCD/Dxe/Pcd.inf
+  INF MdeModulePkg/Universal/PrintDxe/PrintDxe.inf
+  INF MdeModulePkg/Universal/ReportStatusCodeRouter/RuntimeDxe/ReportStatusCodeRouterRuntimeDxe.inf
+  INF MdeModulePkg/Universal/SecurityStubDxe/SecurityStubDxe.inf
+  INF MdeModulePkg/Universal/StatusCodeHandler/RuntimeDxe/StatusCodeHandlerRuntimeDxe.inf
+  INF MdeModulePkg/Universal/Variable/RuntimeDxe/VariableRuntimeDxe.inf
+  INF MdeModulePkg/Universal/WatchdogTimerDxe/WatchdogTimer.inf
+  # INF NetworkPkg/ArpDxe/ArpDxe.inf
+  # INF NetworkPkg/Dhcp4Dxe/Dhcp4Dxe.inf
+  # INF NetworkPkg/Dhcp6Dxe/Dhcp6Dxe.inf
+  # INF NetworkPkg/DnsDxe/DnsDxe.inf
+  # INF NetworkPkg/DpcDxe/DpcDxe.inf
+  # INF NetworkPkg/HttpDxe/HttpDxe.inf
+  # INF NetworkPkg/HttpUtilitiesDxe/HttpUtilitiesDxe.inf
+  # INF NetworkPkg/Ip4Dxe/Ip4Dxe.inf
+  # INF NetworkPkg/Ip6Dxe/Ip6Dxe.inf
+  # INF NetworkPkg/MnpDxe/MnpDxe.inf
+  # INF NetworkPkg/Mtftp4Dxe/Mtftp4Dxe.inf
+  # INF NetworkPkg/Mtftp6Dxe/Mtftp6Dxe.inf
+  # INF NetworkPkg/SnpDxe/SnpDxe.inf
+  # INF NetworkPkg/TcpDxe/TcpDxe.inf
+  # INF NetworkPkg/TlsDxe/TlsDxe.inf
+  # INF NetworkPkg/Udp4Dxe/Udp4Dxe.inf
+  # INF NetworkPkg/Udp6Dxe/Udp6Dxe.inf
+  # INF NetworkPkg/UefiPxeBcDxe/UefiPxeBcDxe.inf
+  # INF NetworkPkg/VlanConfigDxe/VlanConfigDxe.inf
+  # INF AndromedaPkg/Driver/ColorbarsDxe/ColorbarsDxe.inf
+  # INF AndromedaPkg/Driver/SurfaceFirmwareProvisioningDataDxe/SurfaceFirmwareProvisioningDataDxe.inf
+  # INF AndromedaPkg/UFP/ufpdevicefw.inf
+
+[FV.FVMAIN_COMPACT]
+FvAlignment        = 8
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = TRUE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = TRUE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+
+  INF AndromedaPkg/PrePi/PeiUniCore.inf
+
+  FILE FREEFORM = dde58710-41cd-4306-dbfb-3fa90bb1d2dd {
+    SECTION UI = "uefiplat.cfg"
+    SECTION RAW = $(PACKAGE_NAME)/Device/$(TARGET_DEVICE)/Binaries/RawFiles/uefiplat.cfg
+  }
+
+  FILE FV_IMAGE = 9E21FD93-9C72-4c15-8C4B-E77F1DB2D792 {
+    SECTION GUIDED EE4E5898-3914-4259-9D6E-DC7BD79403CF PROCESSING_REQUIRED = TRUE {
+      SECTION FV_IMAGE = FVMAIN
+    }
+  }
+
+  !include AndromedaPkg/Andromeda.fdf.inc

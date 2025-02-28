@@ -116,9 +116,9 @@ jobs:
               chipname: "sm7125"
             },
             {
-              platform: "PalimaPkg",
-              codename: "palima",
-              chipname: "sm8475"
+              platform: "WaipioPkg",
+              codename: "waipio",
+              chipname: "sm8450"
             },
             {
               platform: "SurfaceDuo1Pkg",

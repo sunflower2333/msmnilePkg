@@ -78,7 +78,7 @@ jobs:
             { platform: "NapaliPkg",  codename: "napali",  chipname: "sdm845" },
             { platform: "IstariPkg",  codename: "istari",  chipname: "msm8996"},
             { platform: "NazgulPkg",  codename: "nazgul",  chipname: "msm8998"},
-            { platform: "PalimaPkg",  codename: "palima",  chipname: "sm8475" },
+            { platform: "WaipioPkg",  codename: "waipio",  chipname: "sm8450" },
             { platform: "RennellPkg", codename: "rennell", chipname: "sm7125" },
             {
               platform: "SurfaceDuo1Pkg",

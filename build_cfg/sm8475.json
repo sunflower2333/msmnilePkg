@@ -1,8 +1,0 @@
-{
-    "platform": "Sm8475",
-    "package": "PalimaPkg",
-    "bootshim": {
-        "UEFI_BASE": "0xFFC00000",
-        "UEFI_SIZE": "0x00400000"
-    }
-}
