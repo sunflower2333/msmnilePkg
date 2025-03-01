@@ -77,6 +77,7 @@
 
 [Components.common]
   AndromedaPkg/Driver/SimpleFbDxe/SimpleFbDxe.inf
+  AndromedaPkg/Driver/GpioButtons/GpioButtons.inf
 
 [LibraryClasses.common]
   # Move PlatformMemoryMapLib form Silicon/QC/QCxxxx/Library to Device/<device>/Library

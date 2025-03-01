@@ -84,6 +84,7 @@ READ_LOCK_STATUS   = TRUE
   # Secure Boot Key Enroll
   INF AndromedaPkg/Driver/SecureBootProvisioningDxe/SecureBootProvisioningDxe.inf
 
+  INF AndromedaPkg/Driver/GpioButtons/GpioButtons.inf
   INF EmbeddedPkg/Drivers/VirtualKeyboardDxe/VirtualKeyboardDxe.inf
 
   # BDS
