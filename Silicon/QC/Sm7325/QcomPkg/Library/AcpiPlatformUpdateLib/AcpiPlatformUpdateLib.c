@@ -139,8 +139,6 @@ PlatformUpdateAcpiTables(VOID)
     TCML = 0xBEEFDEAD;
   }
 
-  SOID = 0x237;
-
   DEBUG((EFI_D_WARN, "Chip Id: %d\n", SOID));
   DEBUG((EFI_D_WARN, "Chip Family Id: %d\n", SDFE));
   DEBUG((EFI_D_WARN, "Chip Major Version: %d\n", SVMJ));
